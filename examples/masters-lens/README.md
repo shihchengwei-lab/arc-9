@@ -2,11 +2,11 @@
 
 四個 CSV 匯入方案，分別檢查流程結構、租戶資料隔離、過載受理與交付條件。
 
-| 案例 | 材料與問題 | 完整回答 | 回答中的安排 |
-|---|---|---|---|
-| CSV 匯入 | [題目](csv/input.md) | [原文](csv/answer.md) | 以工作版本與資料庫原子比較阻止舊版覆寫，客戶更新與完成狀態同交易提交；移除預留抽象，量測後再決定是否背景執行。 |
-| 租戶資料隔離 | [題目](security/input.md) | [原文](security/answer.md) | 取消呼叫者選擇路徑，由 worker 依工作中的租戶身分，透過受租戶約束的開檔操作取得固定檔案。 |
-| 過載與受理 | [題目](overload/input.md) | [原文](overload/answer.md) | 將容量與截止時間納入接單，工作與待送事件同交易保存；前端追蹤原工作、重送去重，到期失敗後禁止執行。 |
-| 已完成驗證的方案 | [題目](complete/input.md) | [原文](complete/answer.md) | 對照版本、交易、重試與容量紀錄，支持按目前範圍交付。 |
+| 案例 | 材料與問題 | 完整回答 |
+|---|---|---|
+| CSV 匯入 | [題目](csv/input.md) | [原文](csv/answer.md) |
+| 租戶資料隔離 | [題目](security/input.md) | [原文](security/answer.md) |
+| 過載與受理 | [題目](overload/input.md) | [原文](overload/answer.md) |
+| 已完成驗證的方案 | [題目](complete/input.md) | [原文](complete/answer.md) |
 
 [使用版本與執行紀錄](execution.md)。
