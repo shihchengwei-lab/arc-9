@@ -4,53 +4,61 @@
 
 2026-10-17，使用現有 CSV 匯入、租戶資料隔離、過載受理與完整方案四份題目，審查恢復九位大師具體方法後的單檔版。題目中的效能數字與驗證通過紀錄是給定材料，本輪沒有執行題目所描述的匯入系統。
 
-受測內容見 [SKILL.md 快照](skill-snapshot.md)，SHA-256 為：
+當時版本庫 HEAD 為 `62971aa380010cf3fb79a56ba48b63535dc243da`；實際受測內容為派送前固定的工作目錄快照，以[受測 SKILL.md](skill-snapshot.md) 為準。
 
-```text
-8E4E3F6A01A087B058C5D0AC296AC4574A61A92C9417CB2B406149D5BC95C399
-```
+## 派送與執行
 
-提示詞與封裝在派送前固定，快照與當時的 `dist/skills/masters-lens/SKILL.md`、ZIP 內容相同。測試時的版本庫 HEAD 為 `62971aa380010cf3fb79a56ba48b63535dc243da`，實際受測內容為工作目錄的固定快照。[metadata.json](metadata.json) 保存來源、受測內容與封裝的識別，以及各案派送與回答資料。
+四案各建立一個獨立代理，使用 `fork_turns=none`，沿用主代理模型與推理設定，沒有指定覆寫；工具未提供精確模型版本與 seed。篇幅與格式由受測 skill 提供。
 
-## 派送與設定
-
-每案建立一個獨立代理任務，派送文字如下，案例目錄分別為 `csv`、`security`、`overload`、`complete`：
+派送文字如下，`<案例>` 分別替換為 `csv`、`security`、`overload`、`complete`：
 
 ```text
 請讀取 C:\Users\kk789\Desktop\masters-lenses\experiments\restored-methods-four-cases-2026-10-17\<案例>\input.md 與 C:\Users\kk789\Desktop\masters-lenses\experiments\restored-methods-four-cases-2026-10-17\skills\masters-lens\SKILL.md，使用 $masters-lens 回答題目。
 ```
 
-四個任務均使用 `fork_turns=none`，沿用主代理模型與推理設定，沒有指定覆寫；工具未提供精確模型版本與 seed。派送只有題目與 skill 路徑，共通契約由 skill 提供。
-
-CSV、資安與過載先派送。收到使用者繼續指示時，CSV 與資安已有最終回答，過載尚未完成，完整案尚未派送。其後首次派送完整案，並對過載的同一原任務送出：
+各案一次嘗試、一份最終回答。過載案在同一 session 接續，共兩個回合；其餘各一回合。過載案接續前尚無最終回答，於 UTC `2026-10-17T15:46:54.098Z` 送出：
 
 ```text
 接續原本尚未完成的任務，完成最後回答。
 ```
 
-過載的同一 session 有兩個回合與一份最終回答；其他三案各一個回合與一份最終回答。每案各一次嘗試，沒有補抽。各案實際派送、接收、最終回答的 UTC 時間與 session ID 見 [metadata.json](metadata.json)。
+下表時間均為 UTC 2026-10-17：
 
-四案工具結果均包含完整題目與受測 SKILL.md。完整案另用一次工具計算草擬回答字元。公開完整回答直接保存各 session 的唯一 `final_answer` 原文。本機受測目錄另保留完整工具呼叫與結果、派送及接續紀錄、前版回答與比較。
+| 案例 | session ID | 派送 | 最終回答 |
+|---|---|---|---|
+| CSV 匯入 | `01a14a87-b382-7070-abd3-80bceb8fa44f` | 15:42:49.546 | 15:43:31.037 |
+| 租戶資料隔離 | `01a14a87-d0eb-7793-8bac-f2d5d93bce70` | 15:42:57.187 | 15:43:25.156 |
+| 過載與受理 | `01a14a87-e12f-73b1-a66a-755141c80cd5` | 15:43:01.296 | 15:47:08.210 |
+| 已完成驗證的方案 | `01a14a8b-633b-7ef2-a494-c34840a4fb44` | 15:46:51.301 | 15:47:23.435 |
 
-## 回答與輸出契約
+## 回答與篇幅
 
-| 案例 | 題目 | 完整回答 | 正文字元 | 條列項目 |
-|---|---|---|---|---|
-| CSV 匯入 | [材料與問題](csv/input.md) | [原文](csv/answer.md) | 301 | 3 |
-| 租戶資料隔離 | [材料與問題](security/input.md) | [原文](security/answer.md) | 321 | 3 |
-| 過載與受理 | [材料與問題](overload/input.md) | [原文](overload/answer.md) | 296 | 3 |
-| 已完成驗證的方案 | [材料與問題](complete/input.md) | [原文](complete/answer.md) | 279 | 3 |
+| 案例 | 題目 | 完整回答 | 正文字元 |
+|---|---|---|---|
+| CSV 匯入 | [材料與問題](csv/input.md) | [原文](csv/answer.md) | 301 |
+| 租戶資料隔離 | [材料與問題](security/input.md) | [原文](security/answer.md) | 321 |
+| 過載與受理 | [材料與問題](overload/input.md) | [原文](overload/answer.md) | 296 |
+| 已完成驗證的方案 | [材料與問題](complete/input.md) | [原文](complete/answer.md) | 279 |
 
-計數依 skill，排除空白與 Markdown 排版標記，保留正文識別字的底線。四份均以繁體中文、全文三個條列呈現，符合 250–400 字元，沒有客套話或開場白。
+計數依受測 skill，排除空白與 Markdown 排版標記，保留正文識別字的底線。四份均以繁體中文、全文三個條列呈現，符合 250–400 字元，沒有客套話或開場白。
 
-CSV 回答反對直接加入格式工廠與佇列，將工作內容、版本順序與完成狀態接到資料庫安排；「較新」先列為待定政策。資安回答推導出完整跨租戶外洩路徑，取消任意來源路徑。過載回答提出原子容量保留、工作與待送訊息同交易、補送與原工作追蹤。完整案依既有規則、驗證及量測支持交付，沒有新增問題。
+## 檔案識別與核對
 
-## 檔案與封裝核對
+下表為當輪固定內容的 SHA-256：
 
-四案完成後、保存回答之前，37 個專案檔案與 183 個受測目錄檔案的清單及 SHA-256 與派送前相同；清單檔本身不計入。已安裝 skill 與前版實驗目錄也未變更。
+| 檔案 | SHA-256 |
+|---|---|
+| [受測 SKILL.md](skill-snapshot.md) | `8E4E3F6A01A087B058C5D0AC296AC4574A61A92C9417CB2B406149D5BC95C399` |
+| [csv/input.md](csv/input.md) | `76A8B5B2806D8F7B3EF388867C8805F09FADC3D17005607596113FD5FAFA8069` |
+| [csv/answer.md](csv/answer.md) | `FED135853E34A235608AAF7E8DD1204914DC1464B107EB9D88FD3EC225D674AF` |
+| [security/input.md](security/input.md) | `E17079F30AB7ACB359DD9AEC96BD785A16A1C0D0D8BE70E99C28BDFD457E2D3D` |
+| [security/answer.md](security/answer.md) | `A114BB314F8E4DED5FD5D6A07B69A25D7ADBB8B6B99C3E5F78FF46B9503DC341` |
+| [overload/input.md](overload/input.md) | `8548B7C81D32CAEFCCE1881EBAB06480A792B14D649C7BA93BD97BB6DAF0A6D9` |
+| [overload/answer.md](overload/answer.md) | `2D0E9CAAD2AF8D50A232A56870DF6EFC3469A4E1BC8C61564E17C36A182F17D2` |
+| [complete/input.md](complete/input.md) | `BFD92FE9D6CC06107A87F2E137532E87D9E7A95E7527659E26D5B0DA8A6B7A73` |
+| [complete/answer.md](complete/answer.md) | `9D5728BE055BEA5415C4D44E5E311C1E7DDF22D46B6A3065143EBBF4EA5A87DC` |
+| 當時封裝 ZIP（保存在本機原始紀錄） | `08B77FFD5D565963742F9B3C265A245CDDC5DC7815AE5E04CB039BD999199D2D` |
 
-封裝重建、成品檢查、五項封裝單元測試、官方 quick_validate 與 git diff --check 均通過。ZIP 只含 SKILL.md、agents/openai.yaml、LICENSE 三個檔案；來源、成品、受測快照與 ZIP 一致，手動呼叫政策與授權不變。ZIP 的 SHA-256 為：
+當輪封裝重建、成品檢查、五項封裝單元測試、官方 quick_validate 與 git diff --check 通過；受測快照、當時成品與 ZIP 內容一致。
 
-```text
-08B77FFD5D565963742F9B3C265A245CDDC5DC7815AE5E04CB039BD999199D2D
-```
+完整工具呼叫與結果、派送及接續紀錄、來源與封裝識別、唯讀核對清單及前版比較，保留於本機 `experiments/restored-methods-four-cases-2026-10-17/`。
