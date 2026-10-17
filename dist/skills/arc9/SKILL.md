@@ -1,6 +1,6 @@
 ---
-name: masters-lens
-description: "使用者呼叫 masters-lens 濾鏡時，以唯讀方式依任務材料審查方案、說明未知並提出必要改動建議。"
+name: arc9
+description: "使用者呼叫 arc9 濾鏡時，以唯讀方式依任務材料審查方案、說明未知並提出必要改動建議。"
 license: MIT
 ---
 

@@ -7,14 +7,13 @@ import zipfile
 from pathlib import Path
 
 
-SKILL_NAME = "masters-lens"
-DESCRIPTION = "使用者呼叫 masters-lens 濾鏡時，以唯讀方式依任務材料審查方案、說明未知並提出必要改動建議。"
+SKILL_NAME = "arc9"
+DESCRIPTION = "使用者呼叫 arc9 濾鏡時，以唯讀方式依任務材料審查方案、說明未知並提出必要改動建議。"
 
 
 def package(root, output, check=False):
     root, output = Path(root), Path(output)
     approved = (root / f"drafts/{SKILL_NAME}.md").read_text(encoding="utf-8").strip()
-    title = approved.split("\n", 1)[0].removeprefix("# ")
     license_text = (root / "LICENSE").read_bytes()
     quoted_description = json.dumps(DESCRIPTION, ensure_ascii=False)
     skill = (
@@ -22,7 +21,7 @@ def package(root, output, check=False):
         f"{approved}\n"
     )
     interface = (
-        f"interface:\n  display_name: {json.dumps(title, ensure_ascii=False)}\n"
+        f"interface:\n  display_name: {json.dumps(SKILL_NAME, ensure_ascii=False)}\n"
         f"  short_description: {quoted_description}\n"
         "policy:\n  allow_implicit_invocation: false\n"
     )
@@ -40,7 +39,7 @@ def package(root, output, check=False):
             archive.writestr(entry, content)
 
     expected = {output / "skills" / relative: content for relative, content in files.items()}
-    expected[output / "masters-lenses.zip"] = buffer.getvalue()
+    expected[output / "arc-9.zip"] = buffer.getvalue()
     skills_output = output / "skills"
     expected_directories = {
         directory
@@ -52,6 +51,10 @@ def package(root, output, check=False):
     if any(not path.resolve().is_relative_to(skills_output.resolve())
            for path in existing_paths):
         raise ValueError("Package output escapes skills directory")
+    existing_paths.update(
+        path for path in (output / "arc-9.zip", output / "masters-lenses.zip")
+        if path.exists()
+    )
     obsolete_files = {path for path in existing_paths if path.is_file()} - set(expected)
     obsolete_directories = {
         path for path in existing_paths if path.is_dir()

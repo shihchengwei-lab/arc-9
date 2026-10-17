@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL = "masters-lens"
+SKILL = "arc9"
 
 
 class PackagingTests(unittest.TestCase):
@@ -20,7 +20,7 @@ class PackagingTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary)
             self.packager.package(ROOT, output)
-            with zipfile.ZipFile(output / "masters-lenses.zip") as archive:
+            with zipfile.ZipFile(output / "arc-9.zip") as archive:
                 expected_paths = {
                     f"{SKILL}/{relative}"
                     for relative in ("SKILL.md", "agents/openai.yaml", "LICENSE")
@@ -57,7 +57,7 @@ class PackagingTests(unittest.TestCase):
     def test_check_detects_obsolete_outputs_without_deleting_them(self):
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary)
-            for relative in ("structure/SKILL.md", f"{SKILL}/references/scenes.md"):
+            for relative in ("masters-lens/SKILL.md", f"{SKILL}/references/scenes.md"):
                 with self.subTest(relative=relative):
                     self.packager.package(ROOT, output)
                     target = output / "skills" / relative
@@ -71,10 +71,17 @@ class PackagingTests(unittest.TestCase):
                         self.packager.package(ROOT, output, check=True)
                     self.assertTrue(target.parent.is_dir())
 
+            self.packager.package(ROOT, output)
+            legacy_archive = output / "masters-lenses.zip"
+            legacy_archive.write_bytes(b"obsolete archive")
+            with self.assertRaises(ValueError):
+                self.packager.package(ROOT, output, check=True)
+            self.assertEqual(legacy_archive.read_bytes(), b"obsolete archive")
+
     def test_rebuild_removes_obsolete_outputs_and_matches_archive(self):
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary)
-            legacy = output / "skills/boundary/agents/openai.yaml"
+            legacy = output / "skills/masters-lens/agents/openai.yaml"
             legacy.parent.mkdir(parents=True)
             legacy.write_text("obsolete policy", encoding="utf-8")
             (output / "skills/structure").mkdir()
@@ -87,6 +94,8 @@ class PackagingTests(unittest.TestCase):
             old_scene.write_text("obsolete scene library", encoding="utf-8")
             other_output = output / "notes.txt"
             other_output.write_text("keep this", encoding="utf-8")
+            legacy_archive = output / "masters-lenses.zip"
+            legacy_archive.write_bytes(b"obsolete archive")
 
             self.packager.package(ROOT, output)
             self.packager.package(ROOT, output, check=True)
@@ -96,8 +105,9 @@ class PackagingTests(unittest.TestCase):
             )
             self.assertFalse(extra.exists())
             self.assertFalse(old_scene.parent.exists())
+            self.assertFalse(legacy_archive.exists())
             self.assertEqual(other_output.read_text(encoding="utf-8"), "keep this")
-            with zipfile.ZipFile(output / "masters-lenses.zip") as archive:
+            with zipfile.ZipFile(output / "arc-9.zip") as archive:
                 disk_files = {
                     path.relative_to(output / "skills").as_posix(): path.read_bytes()
                     for path in (output / "skills").rglob("*") if path.is_file()
@@ -110,7 +120,7 @@ class PackagingTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary)
             self.packager.package(ROOT, output)
-            archive = output / "masters-lenses.zip"
+            archive = output / "arc-9.zip"
             original = archive.read_bytes()
             self.packager.package(ROOT, output)
             self.assertEqual(original, archive.read_bytes())

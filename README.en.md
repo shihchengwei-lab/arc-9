@@ -1,8 +1,8 @@
-# masters-lenses
+# arc-9
 
 [繁體中文](README.md)
 
-`$masters-lens` is a manually invoked skill for read-only engineering reviews. It traces an operation from input to result, explains whether a proposal needs changes, and identifies where to change it and why.
+`$arc9` is a manually invoked skill for read-only engineering reviews. It traces an operation from input to result, explains whether a proposal needs changes, and identifies where to change it and why.
 
 Its guiding principle is to make illegal states unrepresentable. It prioritizes changes to data and operations that prevent states forbidden by the requirements. Reviews use materials supplied or permitted by the task and do not change code, files, settings, or external state.
 
@@ -21,25 +21,25 @@ These are summaries of reviews of four CSV import proposals.
 
 ## Usage
 
-The model selects methods for the current problem: following a record through processing, examining what happens after an interruption and retry, comparing how different layers interpret the same input, or checking execution time and resource use. These methods appear as scenarios named after nine engineers in [SKILL.md](dist/skills/masters-lens/SKILL.md).
+The model selects methods for the current problem: following a record through processing, examining what happens after an interruption and retry, comparing how different layers interpret the same input, or checking execution time and resource use. These methods appear as scenarios named after nine engineers in [SKILL.md](dist/skills/arc9/SKILL.md).
 
 When the proposal changes, it rechecks the affected steps against the original requirements.
 
 After installation, invoke it in the current task discussion:
 
 ```text
-$masters-lens Review this proposal and identify any necessary changes.
+$arc9 Review this proposal and identify any necessary changes.
 ```
 
-An explicitly requested output language takes precedence. Otherwise, the response follows the main language and writing form of the current user request. Default length is 250–400 body characters for Chinese or 150–250 words for English, in at most three bullet points. The response covers the judgment, evidence, and any unknowns or next steps that affect the decision, without greetings or an opening preamble. The current task may specify different output requirements. Counting rules and optional fields are defined in the [shared skill contract](dist/skills/masters-lens/SKILL.md).
+An explicitly requested output language takes precedence. Otherwise, the response follows the main language and writing form of the current user request. Default length is 250–400 body characters for Chinese or 150–250 words for English, in at most three bullet points. The response covers the judgment, evidence, and any unknowns or next steps that affect the decision, without greetings or an opening preamble. The current task may specify different output requirements. Counting rules and optional fields are defined in the [shared skill contract](dist/skills/arc9/SKILL.md).
 
 [Full answers and execution records for Chinese requests, English requests, and an explicit language override](examples/masters-lens/language/README.md).
 
 ## Installation
 
-[Download the ZIP](dist/masters-lenses.zip), extract it, and place the `masters-lens` folder in Codex’s skills directory. The default Windows location is `C:\Users\<username>\.codex\skills\`. If `CODEX_HOME` is set, use its `skills` subdirectory. Invoke `$masters-lens` on the next turn.
+[Download the ZIP](dist/arc-9.zip), extract it, and place the `arc9` folder in Codex’s skills directory. The default Windows location is `C:\Users\<username>\.codex\skills\`. If `CODEX_HOME` is set, use its `skills` subdirectory. Invoke `$arc9` on the next turn.
 
-You can also provide the path to [SKILL.md](dist/skills/masters-lens/SKILL.md) and ask the model to read and use it.
+You can also provide the path to [SKILL.md](dist/skills/arc9/SKILL.md) and ask the model to read and use it.
 
 ## Validation and maintenance
 
