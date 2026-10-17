@@ -1,8 +1,8 @@
 {
   "date": "2026-10-17",
-  "skill_source_commit": "14fcf3fd1cdf0d4e6690fef6e832b6e18f91b1ea",
+  "base_commit": "936fbc06b80b4236a4dab25a92df8da72260b9bd",
   "skill_snapshot": "skill-snapshot.md",
-  "skill_sha256": "6F6C4A02C8063597903794A6671724CBD43C66D9119D00C058CA2BAD7A535FDD",
+  "skill_sha256": "B490A3B7830C6D28A546B6B996992BCC98AA885AC22A17F1677FF571A705AD6B",
   "method": {
     "fork_turns": "none",
     "runs_per_case": 1,
@@ -10,72 +10,79 @@
     "reasoning_override": null,
     "exact_model_version": null,
     "seed": null,
-    "output_contract_source": "skill",
+    "common_contract_source": "skill",
     "answer_character_range": [
       250,
       400
     ],
     "answer_maximum_points": 3,
-    "input_change": "Removed repeated output-format and answer-content requirements; case materials unchanged"
+    "input_change": "Inputs contain only materials and the decision question; all common review and output instructions removed",
+    "dispatch": "Read the input and skill, use masters-lens to answer the question"
+  },
+  "readonly_observation": {
+    "project_files_unchanged": 37,
+    "study_files_unchanged": 11,
+    "project_file_lists_and_hashes_match": true,
+    "provided_materials_match": true
   },
   "previous_run": {
-    "execution_record": "https://github.com/shihchengwei-lab/masters-lenses/blob/14fcf3fd1cdf0d4e6690fef6e832b6e18f91b1ea/examples/masters-lens/execution.md",
-    "skill_sha256": "37A191408813E5130FB96C7A0E183D6E855142588FB5D8FE92B9C11584E691F4",
-    "record_repository_commit": "14fcf3fd1cdf0d4e6690fef6e832b6e18f91b1ea",
-    "skill_snapshot": "https://github.com/shihchengwei-lab/masters-lenses/blob/14fcf3fd1cdf0d4e6690fef6e832b6e18f91b1ea/examples/masters-lens/skill-snapshot.md"
+    "record_repository_commit": "936fbc06b80b4236a4dab25a92df8da72260b9bd",
+    "execution_record": "https://github.com/shihchengwei-lab/masters-lenses/blob/936fbc06b80b4236a4dab25a92df8da72260b9bd/examples/masters-lens/execution.md",
+    "skill_snapshot": "https://github.com/shihchengwei-lab/masters-lenses/blob/936fbc06b80b4236a4dab25a92df8da72260b9bd/examples/masters-lens/skill-snapshot.md",
+    "skill_sha256": "6F6C4A02C8063597903794A6671724CBD43C66D9119D00C058CA2BAD7A535FDD"
   },
   "cases": [
     {
       "case": "csv",
       "title": "CSV 匯入",
       "input": "csv/input.md",
-      "input_sha256": "CA1F7A51C28320FAC60C0F5C037831BEB4DEB74BC14916342B99FB03DC42FABB",
+      "input_sha256": "76A8B5B2806D8F7B3EF388867C8805F09FADC3D17005607596113FD5FAFA8069",
       "answer": "csv/answer.md",
-      "answer_sha256": "CCE811B60D2040142CFC9F9C0B19FA46C15DB032BDEFDB7B3B1FD407551609CC",
+      "answer_sha256": "0A75675A40F1EDAE631E6EFE8A78B1571901973D64327E7C32F44BF8A3B234D7",
       "runs": 1,
-      "answer_characters": 312,
+      "answer_characters": 362,
       "answer_explicit_list_points": 3,
-      "answer_paragraph_blocks": 1,
-      "task_name": "/root/shared_contract_csv"
+      "answer_paragraph_blocks": 4,
+      "task_name": "/root/readonly_contract_csv"
     },
     {
       "case": "security",
       "title": "租戶資料隔離",
       "input": "security/input.md",
-      "input_sha256": "168CCA0A2FF8FAA637402133E1DF4285FF453A1ECCA91DF4B30735B4D54AAB6A",
+      "input_sha256": "B9D1ABBF43E926E89DACBD4A3EBCF7BB869DF58DF4C2B3B2E8D7D5211DCC193E",
       "answer": "security/answer.md",
-      "answer_sha256": "9997D1AD35A5E26D1988EFCBFFF72CB85C898D6A9E869B04C089DCAEF62F803B",
+      "answer_sha256": "57A1E60A51255854F23B721F967AF4FC189CE00CB31116F5141117181E1A0F21",
       "runs": 1,
-      "answer_characters": 353,
-      "answer_explicit_list_points": 0,
+      "answer_characters": 301,
+      "answer_explicit_list_points": 3,
       "answer_paragraph_blocks": 4,
-      "task_name": "/root/shared_contract_security"
+      "task_name": "/root/readonly_contract_security"
     },
     {
       "case": "overload",
       "title": "過載與受理",
       "input": "overload/input.md",
-      "input_sha256": "652F4CC870A09ADCABE95DB4ABCF0766843E825A7919C75C8EF294C5A57BC38E",
+      "input_sha256": "48563F69D0F75C5B324AB8C83B96D073263EE7B4C315C9405630732719CE2ACA",
       "answer": "overload/answer.md",
-      "answer_sha256": "EC68EBE249F927F4DAF3195F04E584578227B93DFC749655873164BD1FA3D492",
+      "answer_sha256": "577E260305D36964EBB41DB5FEEC04A2AF1B00F716DD02AEFDFBC082081CD0FE",
       "runs": 1,
-      "answer_characters": 339,
+      "answer_characters": 364,
       "answer_explicit_list_points": 3,
-      "answer_paragraph_blocks": 4,
-      "task_name": "/root/shared_contract_overload"
+      "answer_paragraph_blocks": 2,
+      "task_name": "/root/readonly_contract_overload"
     },
     {
       "case": "complete",
       "title": "已完成驗證的方案",
       "input": "complete/input.md",
-      "input_sha256": "525CA567B4473CC4C1E2DDBBC70DFE0F047FABA0D2F75DF2AE97C52A07748565",
+      "input_sha256": "B66DA6C36CF43D58CF4C94B6882B245CA61EC6835D69E1778409C56273EC3A37",
       "answer": "complete/answer.md",
-      "answer_sha256": "8047ED46EABBF1B78BE89474E2AFAC0EA85A614F6E7FC437B805EF65785A02CC",
+      "answer_sha256": "0ED387D0DE962B7513A307ADD98B41BD6F9A4ACD6722662202EAAF02BF13085F",
       "runs": 1,
-      "answer_characters": 343,
+      "answer_characters": 302,
       "answer_explicit_list_points": 0,
       "answer_paragraph_blocks": 3,
-      "task_name": "/root/shared_contract_complete"
+      "task_name": "/root/readonly_contract_complete"
     }
   ]
 }

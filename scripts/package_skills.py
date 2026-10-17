@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 SKILL_NAME = "masters-lens"
-DESCRIPTION = "使用者呼叫 masters-lens 濾鏡時，依任務承諾與證據檢查整體方案及必要改動。"
+DESCRIPTION = "使用者呼叫 masters-lens 濾鏡時，以唯讀方式依任務材料審查方案、說明未知並提出必要改動建議。"
 
 
 def package(root, output, check=False):
