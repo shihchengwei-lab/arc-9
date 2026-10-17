@@ -10,12 +10,12 @@ Its guiding principle is to make illegal states unrepresentable. It prioritizes 
 
 These are summaries of reviews of four CSV import proposals.
 
-| Proposed system | Problems and changes identified |
+| Proposed system | Review judgment and recommendations |
 |---|---|
 | CSV imports run about twice a week, with at most 500 rows each. The proposal adds a factory for future formats and a queue; an old job can overwrite corrected data. | Do not implement as proposed. Keep CSV parsing, an import service, and the database. Bind each job to fixed content and commit customer updates with completion status in one transaction. Define “newer” first. If acceptance order determines it, allocate sequence numbers in the database and allow only newer jobs to update customer data at the write boundary. Measure execution time before choosing background processing. |
 | Tenants may import only their own files. The API checks the path string’s prefix, while the file service normalizes the path before opening it. | `/tenants/A/../B/customers.csv` passes A’s prefix check but opens B’s file. The worker then imports B’s data into A, where A can query it. Remove caller-selected paths and derive the source from a trusted tenant identity and a fixed filename. |
 | Twenty jobs arrive per second while two finish. Accepted jobs may wait at most 30 seconds. The proposal only enlarges the queue. | A larger queue cannot meet the waiting limit. Check and reserve capacity atomically at admission, and reject excess work. Save the job and pending message in one database transaction, then have a recovery sender deliver the message to the queue. The frontend tracks the original job, and retries return that same job. Accepted jobs must start or explicitly fail within 30 seconds. |
-| A single CSV flow already binds requests to fixed content and implements versioning, transactions, retries, and capacity control. The supplied validation records satisfy the requirements. | Support delivery within the stated scope. Fixed request content and versions, locking the same request, checking versions during writes, and committing data changes with completion results preserve the stated requirements. The answer also cites the supplied measurements and validation records. No substantive new issue is identified. |
+| A five-person internal tool imports CSV files in a single transaction. Resubmission applies the file again, including an older file overwriting corrections. | Supports delivery. Validation precedes writes; a failed transaction rolls back the batch, and the unique constraint preserves customer uniqueness. Resubmission and conflicting writes follow the accepted behavior. The supplied timing, memory, and overload-rejection records also meet this release's requirements. |
 
 [Full case materials and answers](examples/masters-lens/README.md).
 
