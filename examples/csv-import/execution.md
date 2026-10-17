@@ -22,7 +22,7 @@
 
 這是虛構方案的單次提示對照。紀錄包含派送提示詞與回答，未執行回答中的技術建議；沒有獨立評分、多次重跑、正確率或使用者理解程度量測，也未測試安裝後的 `$` 介面。
 
-## 來源與圖片重建
+## 來源版本
 
 濾鏡來源版本：`4e80ebcd2f7f1d4fb524841459e4b5d47e7fe2b4`。
 
@@ -30,11 +30,3 @@
 
 - simplicity：`AFF159F7BB65011C80919E39919F2BCC4253E5397EA0B1DD0F40ECA6D7CD79C0`
 - reliability：`D2C9F2204F44D28C3B00DEB56AA92B366AF526664A6185B2DEEC2ED4A151C5F5`
-
-圖片是編輯整理的重點摘要，搭配各組回答的視覺呈現；每張附一句逐字原文摘錄，腳本會核對摘錄存在於原文。可在 Windows、已安裝 Pillow 與微軟正黑體的環境重建：
-
-```powershell
-python -B -X utf8 scripts/render_readme_examples.py
-```
-
-重建圖片不會重新呼叫模型。
