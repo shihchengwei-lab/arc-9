@@ -1,9 +1,9 @@
 {
   "date": "2026-10-17",
-  "base_commit": "b9f50218922a4eb3b1f526c58fc64ef7af20bacf",
+  "base_commit": "91840e82467fbb3077a6b246423bc25828b9b157",
   "skill_snapshot": "skill-snapshot.md",
-  "skill_sha256": "929C2D7099177FD6BC732C1457BE8855EBC4214227541CC437C5AF752C285D31",
-  "source_sha256": "256181656CF0DB51BA7848A8AE467C09745A3A712FCB487BAAB82ADFE1C66AD7",
+  "skill_sha256": "E93003A2316E379F022D45C71C38410C5E1799CE9C05568BE00BC4E6506502EF",
+  "source_sha256": "1C5DC87FF3E6D73D1EB949BEB67975D4B34658DB615FA356197AF02B3031DED2",
   "packager_sha256": "FE56B8377D0CA48C7DE5571C76B2939E302BA14FB940B524B6A06A110BD7B57A",
   "method": {
     "fork_turns": "none",
@@ -19,23 +19,35 @@
       400
     ],
     "answer_maximum_list_items": 3,
-    "input_change": "Material blocks unchanged; only material and the decision question remain; three delivery questions shortened",
+    "input_change": "Inputs and common dispatch instructions unchanged; only the tested skill changed",
     "dispatch": "Read the input and skill, use masters-lens to answer the question",
     "prompt_changed_after_testing": false,
     "answers_rewritten": false
   },
   "readonly_observation": {
     "project_files_unchanged": 37,
-    "study_files_unchanged": 24,
-    "project_file_lists_and_hashes_match": true,
-    "study_file_lists_and_hashes_match": true,
-    "checked_before_saving_answers": true
+    "study_files_unchanged": 27,
+    "project_lists_and_hashes_match": true,
+    "study_lists_and_hashes_match": true,
+    "checked_before_saving_answers": true,
+    "installed_skill_unchanged": true
+  },
+  "packaging_checks": {
+    "packaging_build": "passed",
+    "packaging_check": "passed",
+    "unit_tests": {
+      "passed": 5,
+      "failed": 0
+    },
+    "official_skill_validator": "passed",
+    "git_diff_check": "passed",
+    "exact_approved_scope": "three text replacements for two merged rule groups; all other text unchanged"
   },
   "previous_run": {
-    "record_repository_commit": "b9f50218922a4eb3b1f526c58fc64ef7af20bacf",
-    "execution_record": "https://github.com/shihchengwei-lab/masters-lenses/blob/b9f50218922a4eb3b1f526c58fc64ef7af20bacf/examples/masters-lens/execution.md",
-    "skill_snapshot": "https://github.com/shihchengwei-lab/masters-lenses/blob/b9f50218922a4eb3b1f526c58fc64ef7af20bacf/examples/masters-lens/skill-snapshot.md",
-    "skill_sha256": "B490A3B7830C6D28A546B6B996992BCC98AA885AC22A17F1677FF571A705AD6B"
+    "record_repository_commit": "91840e82467fbb3077a6b246423bc25828b9b157",
+    "execution_record": "https://github.com/shihchengwei-lab/masters-lenses/blob/91840e82467fbb3077a6b246423bc25828b9b157/examples/masters-lens/execution.md",
+    "skill_snapshot": "https://github.com/shihchengwei-lab/masters-lenses/blob/91840e82467fbb3077a6b246423bc25828b9b157/examples/masters-lens/skill-snapshot.md",
+    "skill_sha256": "929C2D7099177FD6BC732C1457BE8855EBC4214227541CC437C5AF752C285D31"
   },
   "cases": [
     {
@@ -43,64 +55,80 @@
       "title": "CSV 匯入",
       "input": "csv/input.md",
       "input_sha256": "76A8B5B2806D8F7B3EF388867C8805F09FADC3D17005607596113FD5FAFA8069",
-      "answer": "csv/answer.md",
-      "runs": 1,
-      "answer_characters": 296,
+      "previous_answer_sha256": "AF2D8DB50F395465CFDE2111D4C21CA663627795E52AA09027ECD0033EFEBB49",
+      "previous_answer_characters": 296,
+      "dispatch_prompt": "請讀取 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\deduplicated-principles-four-cases-2026-10-17\\csv\\input.md 與 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\deduplicated-principles-four-cases-2026-10-17\\skills\\masters-lens\\SKILL.md，使用 $masters-lens 回答題目。",
+      "task_name": "/root/dedup_principles_csv",
+      "answer_characters": 349,
       "answer_explicit_list_points": 3,
       "answer_paragraph_blocks": 1,
       "character_range_pass": true,
       "full_answer_list_format_pass": true,
-      "answer_sha256": "AF2D8DB50F395465CFDE2111D4C21CA663627795E52AA09027ECD0033EFEBB49",
-      "task_name": "/root/unified_contract_csv",
-      "dispatch_prompt": "請讀取 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\unified-contract-four-cases-2026-10-17\\csv\\input.md 與 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\unified-contract-four-cases-2026-10-17\\skills\\masters-lens\\SKILL.md，使用 $masters-lens 回答題目。"
+      "answer_sha256": "3EAB0A7969F2ABFA8A3A0DC5D09391A0F467C7A376847E873FBD3D2EE49C61D7",
+      "runs": 1,
+      "answer": "csv/answer.md"
     },
     {
       "case": "security",
       "title": "租戶資料隔離",
       "input": "security/input.md",
       "input_sha256": "E17079F30AB7ACB359DD9AEC96BD785A16A1C0D0D8BE70E99C28BDFD457E2D3D",
-      "answer": "security/answer.md",
-      "runs": 1,
-      "answer_characters": 360,
+      "previous_answer_sha256": "C4D08396F749AD8F169B1F82B19266F263F0EFAA4FA01D6A659DEEEE6C4D3314",
+      "previous_answer_characters": 360,
+      "dispatch_prompt": "請讀取 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\deduplicated-principles-four-cases-2026-10-17\\security\\input.md 與 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\deduplicated-principles-four-cases-2026-10-17\\skills\\masters-lens\\SKILL.md，使用 $masters-lens 回答題目。",
+      "task_name": "/root/dedup_principles_security",
+      "answer_characters": 303,
       "answer_explicit_list_points": 3,
       "answer_paragraph_blocks": 1,
       "character_range_pass": true,
       "full_answer_list_format_pass": true,
-      "answer_sha256": "C4D08396F749AD8F169B1F82B19266F263F0EFAA4FA01D6A659DEEEE6C4D3314",
-      "task_name": "/root/unified_contract_security",
-      "dispatch_prompt": "請讀取 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\unified-contract-four-cases-2026-10-17\\security\\input.md 與 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\unified-contract-four-cases-2026-10-17\\skills\\masters-lens\\SKILL.md，使用 $masters-lens 回答題目。"
+      "answer_sha256": "30ECC6945F69ACA3A6081728218554D3F484F6EC08ADA9F97296315F83CDBA5E",
+      "runs": 1,
+      "answer": "security/answer.md"
     },
     {
       "case": "overload",
       "title": "過載與受理",
       "input": "overload/input.md",
       "input_sha256": "8548B7C81D32CAEFCCE1881EBAB06480A792B14D649C7BA93BD97BB6DAF0A6D9",
-      "answer": "overload/answer.md",
-      "runs": 1,
-      "answer_characters": 304,
+      "previous_answer_sha256": "6734863086A14B2ED265AFF98DA1F9EAFA7D0728E94029190EF91DD18E7F91CC",
+      "previous_answer_characters": 304,
+      "dispatch_prompt": "請讀取 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\deduplicated-principles-four-cases-2026-10-17\\overload\\input.md 與 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\deduplicated-principles-four-cases-2026-10-17\\skills\\masters-lens\\SKILL.md，使用 $masters-lens 回答題目。",
+      "task_name": "/root/dedup_principles_overload",
+      "answer_characters": 289,
       "answer_explicit_list_points": 3,
       "answer_paragraph_blocks": 1,
       "character_range_pass": true,
       "full_answer_list_format_pass": true,
-      "answer_sha256": "6734863086A14B2ED265AFF98DA1F9EAFA7D0728E94029190EF91DD18E7F91CC",
-      "task_name": "/root/unified_contract_overload",
-      "dispatch_prompt": "請讀取 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\unified-contract-four-cases-2026-10-17\\overload\\input.md 與 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\unified-contract-four-cases-2026-10-17\\skills\\masters-lens\\SKILL.md，使用 $masters-lens 回答題目。"
+      "answer_sha256": "186E7BC82B93F312BD64213D9289E203DD33E163F2733F398CFC677B9A07C2AD",
+      "runs": 1,
+      "answer": "overload/answer.md"
     },
     {
       "case": "complete",
       "title": "已完成驗證的方案",
       "input": "complete/input.md",
       "input_sha256": "BFD92FE9D6CC06107A87F2E137532E87D9E7A95E7527659E26D5B0DA8A6B7A73",
-      "answer": "complete/answer.md",
-      "runs": 1,
-      "answer_characters": 294,
+      "previous_answer_sha256": "1151F3D1AAB333A90A0A475392F6DD48D0301749F56A3CAF6FCA0B90D7F1FF19",
+      "previous_answer_characters": 294,
+      "dispatch_prompt": "請讀取 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\deduplicated-principles-four-cases-2026-10-17\\complete\\input.md 與 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\deduplicated-principles-four-cases-2026-10-17\\skills\\masters-lens\\SKILL.md，使用 $masters-lens 回答題目。",
+      "task_name": "/root/dedup_principles_complete",
+      "answer_characters": 287,
       "answer_explicit_list_points": 3,
       "answer_paragraph_blocks": 1,
       "character_range_pass": true,
       "full_answer_list_format_pass": true,
-      "answer_sha256": "1151F3D1AAB333A90A0A475392F6DD48D0301749F56A3CAF6FCA0B90D7F1FF19",
-      "task_name": "/root/unified_contract_complete",
-      "dispatch_prompt": "請讀取 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\unified-contract-four-cases-2026-10-17\\complete\\input.md 與 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\unified-contract-four-cases-2026-10-17\\skills\\masters-lens\\SKILL.md，使用 $masters-lens 回答題目。"
+      "answer_sha256": "DD1C70527F43BC15177192CC2E70BA4D2D306B50A4B8D01FC2DD45927655B360",
+      "runs": 1,
+      "answer": "complete/answer.md"
     }
-  ]
+  ],
+  "comparison": {
+    "decisions_unchanged": 4,
+    "no_per_master_output_observed": true,
+    "complete_case_no_added_blockers": true,
+    "security": "An alternative authorization arrangement at the actual file-open boundary replaces removing caller-selected paths",
+    "overload": "Admission, recoverable scheduling and deadlines remain; persistence-to-dispatch details and prevention of execution after expiry are not expanded",
+    "causal_attribution": "This single comparison does not establish that the wording merges caused the differences"
+  }
 }
