@@ -1,0 +1,176 @@
+{
+  "date": "2026-10-18",
+  "base_commit": "62971aa380010cf3fb79a56ba48b63535dc243da",
+  "skill_snapshot": "skill-snapshot.md",
+  "skill_sha256": "6DA793818BB33EB18A9E77E4854EB7E16D1D63AE7149E8BCC038C5AF8A81A7AF",
+  "source_sha256": "A951F99AF5E3FE42FFC585A359E6C6442CC23E4A98EC2266FF39C2A942C4B6C0",
+  "archive_sha256": "3389F295DE3A6FC94775AE3449F2D45CC4E077EF74F4B4622E74099558D7FCCE",
+  "packager_sha256": "FE56B8377D0CA48C7DE5571C76B2939E302BA14FB940B524B6A06A110BD7B57A",
+  "packaged_files_sha256": {
+    "agents/openai.yaml": "8D8749D83BC7C50303C096ABCE1C142BEDF4706DED49F6609C515EBA00B455C0",
+    "LICENSE": "E47F465CB04D113EF607AA7653F27D435EEDD541B5F0BDFE9D8E7BD9EC967C61",
+    "SKILL.md": "6DA793818BB33EB18A9E77E4854EB7E16D1D63AE7149E8BCC038C5AF8A81A7AF"
+  },
+  "material": "../csv/input.md",
+  "material_sha256": "76A8B5B2806D8F7B3EF388867C8805F09FADC3D17005607596113FD5FAFA8069",
+  "method": {
+    "fork_turns": "none",
+    "model_override": null,
+    "reasoning_override": null,
+    "exact_model_version": null,
+    "seed": null,
+    "attempts_per_case": 1,
+    "total_attempts": 3,
+    "final_answers": 3,
+    "common_contract_source": "skill"
+  },
+  "readonly_observation": {
+    "checked_at_utc": "2026-10-17T16:14:25.935777+00:00",
+    "checked_before_saving_answers": true,
+    "checks": {
+      "project_files": {
+        "files": 38,
+        "unchanged": true,
+        "differences": []
+      },
+      "study_files": {
+        "files": 17,
+        "unchanged": true,
+        "differences": []
+      },
+      "installed_skill": {
+        "files": 3,
+        "unchanged": true,
+        "differences": []
+      }
+    }
+  },
+  "cases": [
+    {
+      "case": "chinese",
+      "dispatch_prompt": "請讀取 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\language-contract-three-cases-2026-10-18\\materials\\csv.md 與 C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\language-contract-three-cases-2026-10-18\\skills\\masters-lens\\SKILL.md，使用 $masters-lens 判斷這個 CSV 匯入方案是否值得直接實作。",
+      "prompt_sha256": "1CF19C2D2C1DAB0FBF2DF8BE03AB6CDC5DCF3F88257938AA209375B5AC4AACED",
+      "task_name": "/root/language_contract_chinese",
+      "session_id": "01a14aa3-7380-7ee1-b388-e697740623c8",
+      "dispatched_at_utc": "2026-10-17T16:13:08.336Z",
+      "received_at_utc": "2026-10-17T16:13:10.369Z",
+      "started_at_utc": [
+        "2026-10-17T16:13:08.888Z"
+      ],
+      "final_at_utc": "2026-10-17T16:13:50.328Z",
+      "agent_turns": 1,
+      "attempts": 1,
+      "final_answers": 1,
+      "answer_sha256": "B21AC098672599AE699001D457267142EA2BA6585750299765413216442FCD62",
+      "full_material_returned": true,
+      "full_frozen_skill_returned": true,
+      "dispatch_delivery_match": true,
+      "answer": "chinese.md",
+      "expected": {
+        "language": "Traditional Chinese",
+        "length_unit": "body_characters",
+        "minimum": 250,
+        "maximum": 400
+      },
+      "observed": {
+        "language_observed": "Traditional Chinese",
+        "language_matches_request": true,
+        "body_characters": 303,
+        "words": 5,
+        "measured_unit": "body_characters",
+        "measured_length": 303,
+        "expected_minimum": 250,
+        "expected_maximum": 400,
+        "length_pass": true,
+        "points": 3,
+        "full_list_format_pass": true,
+        "no_preamble_or_greetings_observed": true
+      },
+      "local_transcript_sha256": "83280754B0DBB3E2DEDA84BCBA03A970550C0047BA53BDFA265D2D7BE8D7A193"
+    },
+    {
+      "case": "english",
+      "dispatch_prompt": "Read C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\language-contract-three-cases-2026-10-18\\materials\\csv.md and C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\language-contract-three-cases-2026-10-18\\skills\\masters-lens\\SKILL.md. Use $masters-lens to assess whether this CSV import proposal is worth implementing as proposed.",
+      "prompt_sha256": "9E3E662A4C51DBEC8E82EC238F43063AB52BB169781C31B0191F25811A918C40",
+      "task_name": "/root/language_contract_english",
+      "session_id": "01a14aa3-8741-7c43-b142-40b8cf0f1389",
+      "dispatched_at_utc": "2026-10-17T16:13:13.374Z",
+      "received_at_utc": "2026-10-17T16:13:15.215Z",
+      "started_at_utc": [
+        "2026-10-17T16:13:13.895Z"
+      ],
+      "final_at_utc": "2026-10-17T16:13:52.031Z",
+      "agent_turns": 1,
+      "attempts": 1,
+      "final_answers": 1,
+      "answer_sha256": "5A1C9958E454AED8B1B24D9BCA7CE0A1B1E54EE35F8BD1DD031CD5C4B3A4A0FC",
+      "full_material_returned": true,
+      "full_frozen_skill_returned": true,
+      "dispatch_delivery_match": true,
+      "answer": "english.md",
+      "expected": {
+        "language": "English",
+        "length_unit": "words",
+        "minimum": 150,
+        "maximum": 250
+      },
+      "observed": {
+        "language_observed": "English",
+        "language_matches_request": true,
+        "body_characters": 1347,
+        "words": 234,
+        "measured_unit": "words",
+        "measured_length": 234,
+        "expected_minimum": 150,
+        "expected_maximum": 250,
+        "length_pass": true,
+        "points": 3,
+        "full_list_format_pass": true,
+        "no_preamble_or_greetings_observed": true
+      },
+      "local_transcript_sha256": "936EF5D33DE5118C055355A31C5AA2B9EB34EA0C9E8573CDF9A2C84BB8894B3B"
+    },
+    {
+      "case": "override",
+      "dispatch_prompt": "Read C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\language-contract-three-cases-2026-10-18\\materials\\csv.md and C:\\Users\\kk789\\Desktop\\masters-lenses\\experiments\\language-contract-three-cases-2026-10-18\\skills\\masters-lens\\SKILL.md. Use $masters-lens to assess whether this CSV import proposal is worth implementing as proposed. Answer in Traditional Chinese as used in Taiwan.",
+      "prompt_sha256": "824B93F14980A6BB7AC3A347854F31D12A19CDBFF73799EABB780C7BC2BED13C",
+      "task_name": "/root/language_contract_override",
+      "session_id": "01a14aa3-95de-7490-9ea9-e65f9671d713",
+      "dispatched_at_utc": "2026-10-17T16:13:17.129Z",
+      "received_at_utc": "2026-10-17T16:13:19.359Z",
+      "started_at_utc": [
+        "2026-10-17T16:13:17.619Z"
+      ],
+      "final_at_utc": "2026-10-17T16:13:57.561Z",
+      "agent_turns": 1,
+      "attempts": 1,
+      "final_answers": 1,
+      "answer_sha256": "1DB47E0F7E97B24CF2BAA6205AB05C256DC3459698815E523FBC71402BCEAE89",
+      "full_material_returned": true,
+      "full_frozen_skill_returned": true,
+      "dispatch_delivery_match": true,
+      "answer": "override.md",
+      "expected": {
+        "language": "Traditional Chinese",
+        "length_unit": "body_characters",
+        "minimum": 250,
+        "maximum": 400
+      },
+      "observed": {
+        "language_observed": "Traditional Chinese",
+        "language_matches_request": true,
+        "body_characters": 358,
+        "words": 16,
+        "measured_unit": "body_characters",
+        "measured_length": 358,
+        "expected_minimum": 250,
+        "expected_maximum": 400,
+        "length_pass": true,
+        "points": 3,
+        "full_list_format_pass": true,
+        "no_preamble_or_greetings_observed": true
+      },
+      "local_transcript_sha256": "D6222AA005CAC2E8C3C5AED2A9CFC1CF8375D7629BF934668974824F9C64D19A"
+    }
+  ]
+}

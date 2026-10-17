@@ -10,3 +10,5 @@
 | 已完成驗證的方案 | [題目](complete/input.md) | [原文](complete/answer.md) |
 
 [使用版本與執行紀錄](execution.md)。
+
+[語言與篇幅：三種請求情境](language/README.md)。

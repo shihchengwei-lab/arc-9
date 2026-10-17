@@ -54,20 +54,22 @@ class PackagingTests(unittest.TestCase):
                 self.packager.package(ROOT, output, check=True)
             self.assertEqual(target.read_text(encoding="utf-8"), "unexpected manual edit")
 
-    def test_check_detects_legacy_skill_without_deleting_it(self):
+    def test_check_detects_obsolete_outputs_without_deleting_them(self):
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary)
-            self.packager.package(ROOT, output)
-            target = output / "skills/structure/SKILL.md"
-            target.parent.mkdir()
-            target.write_text("obsolete skill", encoding="utf-8")
-            with self.assertRaises(ValueError):
-                self.packager.package(ROOT, output, check=True)
-            self.assertEqual(target.read_text(encoding="utf-8"), "obsolete skill")
-            target.unlink()
-            with self.assertRaises(ValueError):
-                self.packager.package(ROOT, output, check=True)
-            self.assertTrue(target.parent.is_dir())
+            for relative in ("structure/SKILL.md", f"{SKILL}/references/scenes.md"):
+                with self.subTest(relative=relative):
+                    self.packager.package(ROOT, output)
+                    target = output / "skills" / relative
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_text("obsolete output", encoding="utf-8")
+                    with self.assertRaises(ValueError):
+                        self.packager.package(ROOT, output, check=True)
+                    self.assertEqual(target.read_text(encoding="utf-8"), "obsolete output")
+                    target.unlink()
+                    with self.assertRaises(ValueError):
+                        self.packager.package(ROOT, output, check=True)
+                    self.assertTrue(target.parent.is_dir())
 
     def test_rebuild_removes_obsolete_outputs_and_matches_archive(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -80,6 +82,9 @@ class PackagingTests(unittest.TestCase):
             extra = output / f"skills/{SKILL}/old.txt"
             extra.parent.mkdir()
             extra.write_text("obsolete file", encoding="utf-8")
+            old_scene = output / f"skills/{SKILL}/references/scenes.md"
+            old_scene.parent.mkdir()
+            old_scene.write_text("obsolete scene library", encoding="utf-8")
             other_output = output / "notes.txt"
             other_output.write_text("keep this", encoding="utf-8")
 
@@ -90,6 +95,7 @@ class PackagingTests(unittest.TestCase):
                 {path.name for path in (output / "skills").iterdir()}, {SKILL}
             )
             self.assertFalse(extra.exists())
+            self.assertFalse(old_scene.parent.exists())
             self.assertEqual(other_output.read_text(encoding="utf-8"), "keep this")
             with zipfile.ZipFile(output / "masters-lenses.zip") as archive:
                 disk_files = {
