@@ -2,24 +2,28 @@
 
 [繁體中文](README.md)
 
-`$masters-lens` is a manually invoked skill for read-only engineering reviews. It uses materials supplied or permitted by the task, works backward from delivery requirements, and traces concrete operations to their causes. Its guiding principle is to make illegal states unrepresentable. It provides an overall judgment, supporting evidence, and necessary changes.
+`$masters-lens` is a manually invoked skill for read-only engineering reviews. It traces an operation from input to result, explains whether a proposal needs changes, and identifies where to change it and why.
+
+Its guiding principle is to make illegal states unrepresentable. It prioritizes changes to data and operations that prevent states forbidden by the requirements. Reviews use materials supplied or permitted by the task and do not change code, files, settings, or external state.
 
 ## Cases
 
-These four CSV import proposals cover process structure, tenant isolation, admission capacity, and delivery requirements.
+These are summaries of reviews of four CSV import proposals.
 
-| Proposed system | Review response |
+| Proposed system | Problems and changes identified |
 |---|---|
-| CSV imports run about twice a week, with at most 500 rows each. The proposal adds a factory for future formats and a queue; an old job can overwrite corrected data. | Do not implement as proposed. Keep CSV parsing, an import service, and the database. Bind each job to fixed content and commit customer updates with completion status in one transaction. Define what “newer” means; if acceptance order determines it, allocate sequence numbers in the database and enforce updates atomically. Measure before choosing background execution. |
-| Tenants may import only their own files. The API accepts a path string, which the file service later normalizes. | Trace a path traversal that lets the worker read another tenant’s file, import it into the caller’s tenant, and expose it through queries. Remove caller-selected paths and derive the source from a trusted tenant identity and a fixed filename. |
-| Twenty jobs arrive per second while two finish. Accepted jobs may wait at most 30 seconds. The proposal only enlarges the queue. | Reject queue expansion alone. Reserve capacity atomically at admission and reject excess work. Persist the job and pending message in one transaction, with a sender responsible for recovery. Track the original job and use idempotent retries. Jobs must start or explicitly fail within 30 seconds. |
-| A single CSV flow already implements versioning, transactions, retries, and capacity control. The supplied validation records satisfy the requirements. | Support delivery within the stated scope, citing input validation, fixed content and versions, database locking and atomic updates, transactional results and recovery, and existing measurements. No substantive new issue is identified. |
+| CSV imports run about twice a week, with at most 500 rows each. The proposal adds a factory for future formats and a queue; an old job can overwrite corrected data. | Do not implement as proposed. Keep CSV parsing, an import service, and the database. Bind each job to fixed content and commit customer updates with completion status in one transaction. Define “newer” first. If acceptance order determines it, allocate sequence numbers in the database and allow only newer jobs to update customer data at the write boundary. Measure execution time before choosing background processing. |
+| Tenants may import only their own files. The API checks the path string’s prefix, while the file service normalizes the path before opening it. | `/tenants/A/../B/customers.csv` passes A’s prefix check but opens B’s file. The worker then imports B’s data into A, where A can query it. Remove caller-selected paths and derive the source from a trusted tenant identity and a fixed filename. |
+| Twenty jobs arrive per second while two finish. Accepted jobs may wait at most 30 seconds. The proposal only enlarges the queue. | A larger queue cannot meet the waiting limit. Check and reserve capacity atomically at admission, and reject excess work. Save the job and pending message in one database transaction, then have a recovery sender deliver the message to the queue. The frontend tracks the original job, and retries return that same job. Accepted jobs must start or explicitly fail within 30 seconds. |
+| A single CSV flow already binds requests to fixed content and implements versioning, transactions, retries, and capacity control. The supplied validation records satisfy the requirements. | Support delivery within the stated scope. Fixed request content and versions, locking the same request, checking versions during writes, and committing data changes with completion results preserve the stated requirements. The answer also cites the supplied measurements and validation records. No substantive new issue is identified. |
 
 [Full case materials and answers](examples/masters-lens/README.md).
 
 ## Usage
 
-A shared contract defines inputs, outputs, evidence, and how judgments apply to candidate designs. Named scenarios anchored by nine experts provide observation methods selected for the current problem. When a candidate changes, recheck the operations and judgments that depend on the changed parts. See [SKILL.md](dist/skills/masters-lens/SKILL.md) for the full methods.
+The model selects methods for the current problem: following a record through processing, examining what happens after an interruption and retry, comparing how different layers interpret the same input, or checking execution time and resource use. These methods appear as scenarios named after nine engineers in [SKILL.md](dist/skills/masters-lens/SKILL.md).
+
+When the proposal changes, it rechecks the affected steps against the original requirements.
 
 After installation, invoke it in the current task discussion:
 
@@ -39,7 +43,7 @@ You can also provide the path to [SKILL.md](dist/skills/masters-lens/SKILL.md) a
 
 ## Validation and maintenance
 
-Packaging checks verify consistency among the source, generated files, ZIP, license, and manual invocation policy. See the [maintenance instructions](MAINTENANCE.md) for the source and rebuild commands.
+Packaging checks confirm that the generated SKILL.md contains the full prompt, the ZIP matches the generated directory, and the package includes the MIT license and manual invocation setting. See the [maintenance instructions](MAINTENANCE.md) for the source and rebuild commands.
 
 ## License
 
