@@ -23,6 +23,8 @@
 $masters-lens 請檢查目前方案有哪些必要改動，根據現有材料說明理由。先不要修改檔案。
 ```
 
+預設用台灣繁體中文回答 250–400 字、最多三個重點，直接說明判斷、依據與必要下一步，不寫客套話或開場白。可在任務中指定其他輸出要求。
+
 ## 安裝
 
 [下載 ZIP](dist/masters-lenses.zip)，解壓縮後將 `masters-lens` 資料夾放入 Codex 的 skills 目錄。Windows 預設位置為 `C:\Users\<使用者名稱>\.codex\skills\`；已設定 `CODEX_HOME` 時，使用該目錄下的 `skills`。下個回合即可呼叫 `$masters-lens`。
