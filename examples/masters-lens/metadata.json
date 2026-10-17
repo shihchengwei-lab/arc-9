@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-17",
+  "skill_snapshot": "skill-snapshot.md",
+  "skill_sha256": "37A191408813E5130FB96C7A0E183D6E855142588FB5D8FE92B9C11584E691F4",
+  "method": {
+    "fork_turns": "none",
+    "runs_per_case": 1,
+    "model_override": null,
+    "reasoning_override": null,
+    "exact_model_version": null,
+    "seed": null,
+    "answer_character_range": [
+      250,
+      400
+    ],
+    "answer_maximum_points": 3
+  },
+  "cases": [
+    {
+      "case": "csv",
+      "title": "CSV 匯入",
+      "input": "csv/input.md",
+      "input_sha256": "73BE4E572810378A76F6A717023F58429A5D4721CCF35EEEE8532D82AB89095F",
+      "answer": "csv/answer.md",
+      "answer_sha256": "7705266893AD1B688C250C928706AEF5EE73B38AA7F3935CCF9BD653E5DED084",
+      "runs": 1,
+      "answer_characters": 325,
+      "answer_points": 3
+    },
+    {
+      "case": "security",
+      "title": "租戶資料隔離",
+      "input": "security/input.md",
+      "input_sha256": "02B57464B1B4A1A31E846A9B6C02E34FE9DD5CBEE383B2BEF76C2405E954044C",
+      "answer": "security/answer.md",
+      "answer_sha256": "8C246788383DBD0DD1BA70C53A67FCF051F59277593AF2A94501A1D02E45AB5B",
+      "runs": 1,
+      "answer_characters": 322,
+      "answer_points": 3
+    },
+    {
+      "case": "overload",
+      "title": "過載與受理",
+      "input": "overload/input.md",
+      "input_sha256": "6A273E3A7A9287EE7666E30DA17D6CF266ACF2FC172F268527DD20CA9ACEACD9",
+      "answer": "overload/answer.md",
+      "answer_sha256": "58DAC937642B8475962F9A003322D99E59110D125E4C30334F2175A1BBF59AD0",
+      "runs": 1,
+      "answer_characters": 378,
+      "answer_points": 3
+    },
+    {
+      "case": "complete",
+      "title": "已完成驗證的方案",
+      "input": "complete/input.md",
+      "input_sha256": "1F8FC4F5DCE4242D332C550CD248D22BE5322E6AD0F858E234D0DABA6C94935F",
+      "answer": "complete/answer.md",
+      "answer_sha256": "7A1A8282E5857453C5A8FD586537B18D2880D94F17C0C109352640DFBB87F6C9",
+      "runs": 1,
+      "answer_characters": 316,
+      "answer_points": 3
+    }
+  ]
+}

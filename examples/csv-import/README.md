@@ -1,5 +1,7 @@
 # CSV 匯入：單次三組對照
 
+這是舊版六濾鏡的歷史對照，使用當時的 simplicity 與 reliability。提示詞與回答保留原文，來源連結固定到測試時的版本。
+
 2026-09-07，以修正後的比較方式重新執行。三個獨立 subagent 各回答一次，未繼承主對話（`fork_turns="none"`），未看到其他組回答；本輪未重抽或改寫回答。三組沿用主代理模型設定，沒有覆寫模型或推理設定；工具沒有回傳可供核對的模型版本與隨機種子，因此不主張完全可重現。
 
 共同輸入只包含中性的審查要求、相同材料與問題，要求繁體中文、250–400 字、最多三個重點。只有角色組加上「你是資深工程師」；單濾鏡組只使用 simplicity，雙濾鏡組只使用 simplicity 與 reliability，兩個濾鏡組都不加資深工程師角色提示。長度是提示要求，輸出全文照錄，未為符合字數刪改。此處以讀取 SKILL.md 使用濾鏡，沒有測試安裝後的 `$` 介面。
@@ -9,8 +11,8 @@
 | 組別 | 實際派送提示詞 | 回答全文 | 額外材料 |
 |---|---|---|---|
 | 角色提示（無濾鏡） | [提示詞](baseline-prompt.txt) | [原始回答](baseline.md) | 無 |
-| 單一濾鏡 | [提示詞](single-prompt.txt) | [原始回答](single.md) | [simplicity](../../dist/skills/simplicity/SKILL.md) |
-| 雙濾鏡 | [提示詞](dual-prompt.txt) | [原始回答](dual.md) | simplicity 與 [reliability](../../dist/skills/reliability/SKILL.md) |
+| 單一濾鏡 | [提示詞](single-prompt.txt) | [原始回答](single.md) | [simplicity](https://github.com/shihchengwei-lab/masters-lenses/blob/4e80ebcd2f7f1d4fb524841459e4b5d47e7fe2b4/dist/skills/simplicity/SKILL.md) |
+| 雙濾鏡 | [提示詞](dual-prompt.txt) | [原始回答](dual.md) | simplicity 與 [reliability](https://github.com/shihchengwei-lab/masters-lenses/blob/4e80ebcd2f7f1d4fb524841459e4b5d47e7fe2b4/dist/skills/reliability/SKILL.md) |
 
 [共同材料與問題](input.md)。所有組別都被要求不讀取指定範圍以外的檔案、不修改檔案。
 

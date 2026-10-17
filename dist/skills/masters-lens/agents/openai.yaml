@@ -1,0 +1,5 @@
+interface:
+  display_name: "整體判斷濾鏡"
+  short_description: "使用者呼叫 masters-lens 濾鏡時，依任務承諾與證據檢查整體方案及必要改動。"
+policy:
+  allow_implicit_invocation: false

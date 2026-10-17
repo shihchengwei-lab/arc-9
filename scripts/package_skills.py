@@ -1,4 +1,4 @@
-"""Build six standalone skills from the approved shared and lens sources."""
+"""Build the standalone skill from its approved source."""
 
 import argparse
 import io
@@ -7,41 +7,30 @@ import zipfile
 from pathlib import Path
 
 
-DESCRIPTIONS = {
-    "design": "使用者呼叫 design 濾鏡時，檢查系統限制、上游選擇與下游成本，協助比較整體工程取捨。",
-    "feedback": "使用者呼叫 feedback 濾鏡時，檢查假設到可信回饋的距離，協助選擇能辨別結果的下一步與停止點。",
-    "evolve": "使用者呼叫 evolve 濾鏡時，追蹤具體需求的知識歸屬、共同變更理由與協調成本。",
-    "simplicity": "使用者呼叫 simplicity 濾鏡時，檢查資料、責任與控制流程是否直接表達必要行為。",
-    "reliability": "使用者呼叫 reliability 濾鏡時，檢查狀態、可行事件順序、重試與中斷是否守住系統承諾。",
-    "performance": "使用者呼叫 performance 濾鏡時，沿實際執行與量測範圍比較可改善成本及必要工作。",
-}
-
-
-def split_document(path):
-    title, body = path.read_text(encoding="utf-8").strip().split("\n", 1)
-    return title.removeprefix("# "), body.strip()
+SKILL_NAME = "masters-lens"
+DESCRIPTION = "使用者呼叫 masters-lens 濾鏡時，依任務承諾與證據檢查整體方案及必要改動。"
 
 
 def package(root, output, check=False):
     root, output = Path(root), Path(output)
-    _, common = split_document(root / "drafts/common.md")
+    approved = (root / f"drafts/{SKILL_NAME}.md").read_text(encoding="utf-8").strip()
+    title = approved.split("\n", 1)[0].removeprefix("# ")
     license_text = (root / "LICENSE").read_bytes()
-    files = {}
-    for name, description in DESCRIPTIONS.items():
-        title, lens = split_document(root / f"drafts/{name}.md")
-        quoted_description = json.dumps(description, ensure_ascii=False)
-        skill = (
-            f"---\nname: {name}\ndescription: {quoted_description}\nlicense: MIT\n---\n\n"
-            f"# {title}\n\n## 共用契約\n\n{common}\n\n{lens}\n"
-        )
-        interface = (
-            f"interface:\n  display_name: {json.dumps(title, ensure_ascii=False)}\n"
-            f"  short_description: {quoted_description}\n"
-            "policy:\n  allow_implicit_invocation: false\n"
-        )
-        files[f"{name}/SKILL.md"] = skill.encode("utf-8")
-        files[f"{name}/agents/openai.yaml"] = interface.encode("utf-8")
-        files[f"{name}/LICENSE"] = license_text
+    quoted_description = json.dumps(DESCRIPTION, ensure_ascii=False)
+    skill = (
+        f"---\nname: {SKILL_NAME}\ndescription: {quoted_description}\nlicense: MIT\n---\n\n"
+        f"{approved}\n"
+    )
+    interface = (
+        f"interface:\n  display_name: {json.dumps(title, ensure_ascii=False)}\n"
+        f"  short_description: {quoted_description}\n"
+        "policy:\n  allow_implicit_invocation: false\n"
+    )
+    files = {
+        f"{SKILL_NAME}/SKILL.md": skill.encode("utf-8"),
+        f"{SKILL_NAME}/agents/openai.yaml": interface.encode("utf-8"),
+        f"{SKILL_NAME}/LICENSE": license_text,
+    }
 
     buffer = io.BytesIO()
     with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_DEFLATED) as archive:
@@ -52,14 +41,32 @@ def package(root, output, check=False):
 
     expected = {output / "skills" / relative: content for relative, content in files.items()}
     expected[output / "masters-lenses.zip"] = buffer.getvalue()
+    skills_output = output / "skills"
+    expected_directories = {
+        directory
+        for relative in files
+        for directory in (skills_output / relative).parents
+        if skills_output in directory.parents
+    }
+    existing_paths = set(skills_output.rglob("*"))
+    if any(not path.resolve().is_relative_to(skills_output.resolve())
+           for path in existing_paths):
+        raise ValueError("Package output escapes skills directory")
+    obsolete_files = {path for path in existing_paths if path.is_file()} - set(expected)
+    obsolete_directories = {
+        path for path in existing_paths if path.is_dir()
+    } - expected_directories
     if check:
         differences = [str(path) for path, content in expected.items()
                        if not path.is_file() or path.read_bytes() != content]
-        existing = {path for path in (output / "skills").rglob("*") if path.is_file()}
-        differences += [str(path) for path in sorted(existing - set(expected))]
+        differences += [str(path) for path in sorted(obsolete_files | obsolete_directories)]
         if differences:
             raise ValueError("Package differs from approved sources: " + ", ".join(differences))
     else:
+        for path in sorted(obsolete_files):
+            path.unlink()
+        for path in sorted(obsolete_directories, key=lambda path: len(path.parts), reverse=True):
+            path.rmdir()
         for path, content in expected.items():
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(content)
@@ -74,7 +81,7 @@ def main():
         package(root, root / "dist", check=args.check)
     except ValueError as error:
         parser.exit(1, f"{error}\n")
-    print("Six standalone skills: " + ("verified" if args.check else "packaged"))
+    print("1 standalone skill: " + ("verified" if args.check else "packaged"))
 
 
 if __name__ == "__main__":
