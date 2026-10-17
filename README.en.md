@@ -1,3 +1,5 @@
+![Architecture Review Core 9](docs/images/arc9-hero.png)
+
 # arc-9
 
 [繁體中文](README.md)
