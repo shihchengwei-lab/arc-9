@@ -2,13 +2,15 @@
 
 ## 來源與成品
 
+用途、案例與安裝方式見 [README](README.md)。本文件說明重建與維護方式。
+
 [drafts/masters-lens.md](drafts/masters-lens.md) 是完整提示詞的唯一維護來源，包含共用契約與具名場景；不要直接修改 `dist/` 中的產物。
 
 [封裝腳本](scripts/package_skills.py) 維護呼叫名稱與介面描述，為完整來源加上 SKILL.md 識別資訊，另產生 agents/openai.yaml。單一成品名稱為 `masters-lens`，設定 `allow_implicit_invocation: false`，維持使用者明確呼叫。
 
 成品目錄與 ZIP 均只含 `masters-lens`，內有 SKILL.md、agents/openai.yaml 與 LICENSE，共 3 個檔案。授權文字來自根目錄 LICENSE。封裝程式、測試與研究材料不進入 ZIP；腳本不安裝、發布或呼叫模型。
 
-同一份產物集合決定 ZIP 與 `dist/skills/` 的內容。重建會清除 `dist/skills/` 中不在集合內的過期檔案與資料夾，包括原三份與更早版本的成品；其他位置不受影響。已提交的舊版提示詞可由 Git 歷史查閱，歷史對照保留於 `examples/`；本機研究快照不進入成品。
+同一份產物集合決定 ZIP 與 `dist/skills/` 的內容。重建會清除 `dist/skills/` 中不在集合內的過期檔案與資料夾，包括原三份與更早版本的成品；其他位置不受影響。已提交的舊版提示詞與案例可由 Git 歷史查閱；本機研究快照不進入成品。
 
 ## 重建與檢查
 

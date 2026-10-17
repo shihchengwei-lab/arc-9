@@ -39,7 +39,7 @@ You can also provide the path to [SKILL.md](dist/skills/masters-lens/SKILL.md) a
 
 ## Validation and maintenance
 
-Packaging checks verify consistency among the source, generated files, ZIP, license, and manual invocation policy. See the [maintenance instructions](MAINTENANCE.md) for the source and rebuild commands. Materials and answers from the original six filters remain in the [historical comparison](examples/csv-import/README.md).
+Packaging checks verify consistency among the source, generated files, ZIP, license, and manual invocation policy. See the [maintenance instructions](MAINTENANCE.md) for the source and rebuild commands.
 
 ## License
 
