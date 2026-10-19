@@ -12,3 +12,5 @@
 [使用版本與執行紀錄](execution.md)。
 
 [語言與篇幅：三種請求情境](language/README.md)。
+
+[承諾更新與問題合併：六個狀態](contracts/README.md)。

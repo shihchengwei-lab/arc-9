@@ -21,11 +21,20 @@ These are summaries of reviews of four CSV import proposals.
 
 [Full case materials and answers](examples/masters-lens/README.md).
 
+The following cases show how judgments change when requirements or proposals change.
+
+| Change in the case | Review judgment |
+|---|---|
+| A report takes 45 seconds. The task selects R1's 30-second requirement, but an implementation note says 60 seconds is acceptable. The task then selects R2's 60-second requirement. | Reject under R1; an implementation note cannot change the requirement. Accept once the task selects R2. |
+| Download and deletion can both authorize A but operate on B. Download is fixed first, then deletion. | Identify both defects initially; retain only the deletion defect after download is fixed. Once both are fixed, identify no remaining implementation defect and suggest tests for identities with only read or only delete permission. |
+
+[Full materials and answers for the six states](examples/masters-lens/contracts/README.md).
+
 ## Usage
 
 The model selects methods for the current problem: tracing how data is processed, which other jobs a stalled operation holds up, whether data changes after validation, and what an interruption and retry leave behind. It also compares how different layers interpret the same input and checks execution time and resource use. These methods appear as scenarios named after nine engineers in [SKILL.md](dist/skills/arc9/SKILL.md).
 
-When the proposal changes, it rechecks the affected steps against the original requirements.
+When the proposal changes, it rechecks the affected steps against the task's specified requirements.
 
 After installation, invoke it in the current task discussion:
 

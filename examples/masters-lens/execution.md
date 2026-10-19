@@ -49,10 +49,10 @@
 | [overload/answer.md](overload/answer.md) | `9C3EEEC4382D17A35C4B477E039132E8BE12B81F6EAA53FE7B270A1EF180881B` |
 | [complete/input.md](complete/input.md) | `DB86977F3E676591BD32619E86E6361F729D41EE43FF45700E74EE84C29C5B28` |
 | [complete/answer.md](complete/answer.md) | `F92391601EC4E016079A24F671EAD5E6814C6590DFC711F5743CB76E1198696F` |
-| [封裝 ZIP](../../dist/arc-9.zip) | `41707EDF03B075A3F18B45DF343CE2BE1ADD1047AAB1C1D1AD7F8F7C62106708` |
+| 當時封裝 ZIP | `41707EDF03B075A3F18B45DF343CE2BE1ADD1047AAB1C1D1AD7F8F7C62106708` |
 
-公開回答逐位元組複製自本機原文，並與 session 的 final_answer 及 task_complete 核對一致。受測快照、成品 SKILL.md 與 ZIP 中的 SKILL.md 相同；移除識別資訊後的正文與唯一維護來源 drafts/arc9.md 一致。
+公開回答逐位元組複製自本機原文，並與 session 的 final_answer 及 task_complete 核對一致。受測快照與當時成品 SKILL.md、當時 ZIP 中的 SKILL.md 相同；移除識別資訊後的正文與當時維護來源 drafts/arc9.md 一致。
 
-封裝重建、成品檢查、五項封裝單元測試、官方 quick_validate 與 git diff --check 通過。ZIP 包含 SKILL.md、agents/openai.yaml 與 LICENSE，手動呼叫政策與 MIT 授權保留。
+當輪封裝重建、成品檢查、五項封裝單元測試、官方 quick_validate 與 git diff --check 通過。ZIP 包含 SKILL.md、agents/openai.yaml 與 LICENSE，手動呼叫政策與 MIT 授權保留。
 
 完整工具呼叫與結果、派送與 session 識別、進度文字、最終回答及測前固定資料保留於本機 `experiments/jann-move-four-cases-2026-10-18/`，包括各案 transcript.jsonl、frozen.json 與 execution.md。
