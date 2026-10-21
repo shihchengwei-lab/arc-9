@@ -8,11 +8,21 @@ A proposal can look workable while leaving gaps in data updates, permissions, or
 
 `$arc9` is a manually invoked skill for read-only engineering reviews. It traces actual operations, explains whether a proposal needs changes, and identifies where to change it and why. When a proposal already meets the requirements, it says so.
 
+Requires a host with independent sub-agent support. One sub-agent performs the review; the main model edits the body and appendix separately.
+
 Its guiding principle is to make illegal states unrepresentable: arrange data and operations so that states forbidden by the requirements cannot be created. Reviews use materials supplied or permitted by the task and do not change code, files, settings, or external state.
+
+## Current results and cost
+
+The 2026-10-22 rerun matched the expected delivery verdicts in all 10 proposal and requirement states. Three language requests also met expectations in a separate environment without global language instructions.
+
+The main suite's median complete workflow took about 220 seconds and 239,000 tokens (main model plus reviewer, including cached input; gpt-6.1-sol / xhigh). Remaining observations include treating a memo rewrite as required and repeating verification-method qualifications in the body.
+
+[Current report](tests/reports/arc9-finalized-2026-10-22.md) · [Complete inputs and answers](examples/masters-lens/finalized-2026-10-22/README.md) · [Language calibration report](tests/reports/arc9-language-neutral-2026-10-22.md)
 
 ## Representative cases
 
-These summaries come from reviews of four CSV import proposals.
+These summaries come from [this round's reviews of four CSV import proposals](examples/masters-lens/finalized-2026-10-22/README.md).
 
 | Proposed system | Review finding |
 |---|---|
@@ -32,13 +42,12 @@ $arc9 Review this proposal and identify any necessary changes.
 
 The response briefly covers the judgment, evidence, and any unknowns or next steps that affect the decision. It follows the request’s language by default; you can specify a different language or length.
 
-You can also provide the path to a downloaded [SKILL.md](dist/skills/arc9/SKILL.md) and ask the model to read and use it.
+You can also provide the path to [SKILL.md](dist/skills/arc9/SKILL.md) within the complete `arc9` folder and ask the model to read and use it. Keep the `references` folder alongside it.
 
 ## Full cases and records
 
-- Four CSV proposals: [Materials and full answers](examples/masters-lens/README.md) · [Execution records](examples/masters-lens/execution.md)
-- Updated requirements and resolved issues: [Full answers for six states](examples/masters-lens/contracts/README.md) · [Execution records](examples/masters-lens/contracts/execution.md)
-- Language and length: [Three request scenarios](examples/masters-lens/language/README.md) · [Execution records](examples/masters-lens/language/execution.md)
+- Current complete workflow: [Inputs, answers and independent reviews for 13 requests](examples/masters-lens/finalized-2026-10-22/README.md) · [Results, cost and assessments](tests/reports/arc9-finalized-2026-10-22.md)
+- Calibration without global language instructions: [Complete outputs for three requests](examples/masters-lens/finalized-2026-10-22/neutral-language/README.md) · [Execution report](tests/reports/arc9-language-neutral-2026-10-22.md)
 
 See the [maintenance instructions](MAINTENANCE.md) for prompt sources, packaging checks, and rebuild commands.
 

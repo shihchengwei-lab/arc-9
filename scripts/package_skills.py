@@ -8,6 +8,7 @@ from pathlib import Path
 
 
 SKILL_NAME = "arc9"
+REFERENCE_NAMES = ("review.md", "output.md")
 DESCRIPTION = "使用者呼叫 arc9 濾鏡時，以唯讀方式依任務材料審查方案、說明未知並提出必要改動建議。"
 
 
@@ -30,6 +31,10 @@ def package(root, output, check=False):
         f"{SKILL_NAME}/agents/openai.yaml": interface.encode("utf-8"),
         f"{SKILL_NAME}/LICENSE": license_text,
     }
+    for name in REFERENCE_NAMES:
+        files[f"{SKILL_NAME}/references/{name}"] = (
+            root / "drafts/references" / name
+        ).read_bytes()
 
     buffer = io.BytesIO()
     with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_DEFLATED) as archive:

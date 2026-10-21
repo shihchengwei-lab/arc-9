@@ -1,0 +1,45 @@
+{
+  "created_utc": "2026-10-21T18:56:39.484449+00:00",
+  "attempts_per_case": 1,
+  "cases": {
+    "language-chinese": {
+      "group": "language",
+      "language": "Traditional Chinese (Taiwan)",
+      "required": [
+        "Same substantive CSV concerns as the csv case",
+        "Request language controls output; explicit Traditional Chinese request overrides an English request"
+      ]
+    },
+    "language-english": {
+      "group": "language",
+      "language": "English",
+      "required": [
+        "Same substantive CSV concerns as the csv case",
+        "Request language controls output; explicit Traditional Chinese request overrides an English request"
+      ]
+    },
+    "language-override": {
+      "group": "language",
+      "language": "Traditional Chinese (Taiwan)",
+      "required": [
+        "Same substantive CSV concerns as the csv case",
+        "Request language controls output; explicit Traditional Chinese request overrides an English request"
+      ]
+    }
+  },
+  "workflow_checks": [
+    "Exactly one main editor plus one independent reviewer with fork_turns=none",
+    "Main reads entry and output contract; reviewer reads review contract and case",
+    "Reviewer does not delegate",
+    "No materials outside the current case and skill snapshot are read"
+  ],
+  "output_checks": [
+    "Conclusion and necessary arrangements are supported by the task and supplied evidence",
+    "Optional improvements and their qualifications remain together in an appendix or a working linked review material",
+    "No raw verification detail or review process is promoted solely to preempt objections",
+    "Body at most three bullets by default; no minimum length; necessary conditions preserved"
+  ],
+  "assessment": "Read complete unmodified answers and reviewer packets against these frozen conditions; accept valid alternatives. Record pass/partial/fail/not-applicable with quote evidence. Do not resample quality failures.",
+  "scope": "Neutral-profile language calibration after detecting global AGENTS contamination in the first suite; retain all original results.",
+  "environment_check": "Every main and reviewer rollout must contain no injected AGENTS user instruction block; inspect actual inputs, not just flags."
+}

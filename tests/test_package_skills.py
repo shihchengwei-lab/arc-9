@@ -7,6 +7,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILL = "arc9"
+PACKAGE_FILES = (
+    "SKILL.md", "agents/openai.yaml", "LICENSE",
+    "references/review.md", "references/output.md",
+)
 
 
 class PackagingTests(unittest.TestCase):
@@ -23,17 +27,22 @@ class PackagingTests(unittest.TestCase):
             with zipfile.ZipFile(output / "arc-9.zip") as archive:
                 expected_paths = {
                     f"{SKILL}/{relative}"
-                    for relative in ("SKILL.md", "agents/openai.yaml", "LICENSE")
+                    for relative in PACKAGE_FILES
                 }
                 self.assertEqual(set(archive.namelist()), expected_paths)
                 self.assertEqual(len(archive.namelist()), len(expected_paths))
                 self.assertEqual(
                     {path.name for path in (output / "skills").iterdir()}, {SKILL}
                 )
-                for relative in ("SKILL.md", "agents/openai.yaml", "LICENSE"):
+                for relative in PACKAGE_FILES:
                     self.assertEqual(
                         archive.read(f"{SKILL}/{relative}"),
                         (output / f"skills/{SKILL}/{relative}").read_bytes(),
+                    )
+                for name in ("review.md", "output.md"):
+                    self.assertEqual(
+                        archive.read(f"{SKILL}/references/{name}"),
+                        (ROOT / "drafts/references" / name).read_bytes(),
                     )
                 expected_license = (ROOT / "LICENSE").read_bytes()
                 self.assertEqual(archive.read(f"{SKILL}/LICENSE"), expected_license)
@@ -47,17 +56,45 @@ class PackagingTests(unittest.TestCase):
     def test_check_detects_edited_skill_without_overwriting_it(self):
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary)
-            self.packager.package(ROOT, output)
-            target = output / f"skills/{SKILL}/SKILL.md"
-            target.write_text("unexpected manual edit", encoding="utf-8")
-            with self.assertRaises(ValueError):
-                self.packager.package(ROOT, output, check=True)
-            self.assertEqual(target.read_text(encoding="utf-8"), "unexpected manual edit")
+            for relative in ("SKILL.md", "references/review.md", "references/output.md"):
+                with self.subTest(relative=relative):
+                    self.packager.package(ROOT, output)
+                    target = output / f"skills/{SKILL}" / relative
+                    target.write_text("unexpected manual edit", encoding="utf-8")
+                    with self.assertRaises(ValueError):
+                        self.packager.package(ROOT, output, check=True)
+                    self.assertEqual(
+                        target.read_text(encoding="utf-8"), "unexpected manual edit"
+                    )
+
+    def test_missing_reference_prevents_build_without_changing_existing_package(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            source = Path(temporary) / "source"
+            output = Path(temporary) / "output"
+            for relative in (
+                f"drafts/{SKILL}.md", "LICENSE",
+                "drafts/references/review.md", "drafts/references/output.md",
+            ):
+                target = source / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes((ROOT / relative).read_bytes())
+            self.packager.package(source, output)
+            original = {
+                path.relative_to(output): path.read_bytes()
+                for path in output.rglob("*") if path.is_file()
+            }
+            (source / "drafts/references/review.md").unlink()
+            with self.assertRaises(FileNotFoundError):
+                self.packager.package(source, output)
+            self.assertEqual(original, {
+                path.relative_to(output): path.read_bytes()
+                for path in output.rglob("*") if path.is_file()
+            })
 
     def test_check_detects_obsolete_outputs_without_deleting_them(self):
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary)
-            for relative in ("masters-lens/SKILL.md", f"{SKILL}/references/scenes.md"):
+            for relative in ("masters-lens/SKILL.md", f"{SKILL}/obsolete/scenes.md"):
                 with self.subTest(relative=relative):
                     self.packager.package(ROOT, output)
                     target = output / "skills" / relative
@@ -104,7 +141,8 @@ class PackagingTests(unittest.TestCase):
                 {path.name for path in (output / "skills").iterdir()}, {SKILL}
             )
             self.assertFalse(extra.exists())
-            self.assertFalse(old_scene.parent.exists())
+            self.assertFalse(old_scene.exists())
+            self.assertTrue(old_scene.parent.is_dir())
             self.assertFalse(legacy_archive.exists())
             self.assertEqual(other_output.read_text(encoding="utf-8"), "keep this")
             with zipfile.ZipFile(output / "arc-9.zip") as archive:

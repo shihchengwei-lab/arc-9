@@ -1,0 +1,2 @@
+# Preserve verbatim evidence, including original line endings and Markdown spacing.
+* -text -whitespace

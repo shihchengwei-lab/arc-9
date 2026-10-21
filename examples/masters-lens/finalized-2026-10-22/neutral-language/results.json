@@ -1,0 +1,177 @@
+{
+  "date": "2026-10-22",
+  "profile": "Distinct CODEX_HOME without global or project AGENTS; absence checked in all six actual model input logs",
+  "model": "gpt-6.1-sol",
+  "effort": "xhigh",
+  "cli_version": "0.159.1",
+  "requests": 3,
+  "unique_threads": 6,
+  "language_pass": 3,
+  "language_count": 3,
+  "total_tokens": {
+    "input_tokens": 821208,
+    "cached_input_tokens": 676736,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 39816,
+    "reasoning_output_tokens": 15872,
+    "total_tokens": 861024
+  },
+  "seconds_sum": 781.062,
+  "seconds_median": 248.937,
+  "tokens_median": 298627,
+  "including_original_suite": {
+    "requests": 16,
+    "unique_threads": 32,
+    "total_tokens": {
+      "input_tokens": 4182449,
+      "cached_input_tokens": 3422208,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 148059,
+      "reasoning_output_tokens": 61776,
+      "total_tokens": 4330508
+    },
+    "seconds_sum": 3340.0299999999997
+  },
+  "rows": [
+    {
+      "case": "language-chinese",
+      "start_utc": "2026-10-21T18:56:40.830122+00:00",
+      "end_utc": "2026-10-21T19:00:49.756906+00:00",
+      "seconds": 248.937,
+      "tokens": {
+        "input_tokens": 321903,
+        "cached_input_tokens": 280960,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 15225,
+        "reasoning_output_tokens": 5930,
+        "total_tokens": 337128
+      },
+      "main_tokens": {
+        "input_tokens": 237229,
+        "cached_input_tokens": 213248,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5520,
+        "reasoning_output_tokens": 2595,
+        "total_tokens": 242749
+      },
+      "reviewer_tokens": {
+        "input_tokens": 84674,
+        "cached_input_tokens": 67712,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 9705,
+        "reasoning_output_tokens": 3335,
+        "total_tokens": 94379
+      },
+      "main_thread_id": "01a15fd2-9e16-7671-a8bf-c357a63b058c",
+      "reviewer_thread_id": "01a15fd2-e5b1-7980-b20e-20359ba089bf",
+      "injected_agents_blocks": 0,
+      "input_sha256": "76a8b5b2806d8f7b3ef388867c8805f09fadc3d17005607596113fd5fafa8069",
+      "answer_sha256": "2d419fe7dcf7c08645814281fea6ac43aa585c31ba26a48a00c16c01c67fa0bf",
+      "reviewer_sha256": "134fbd950e50c3e99eac768a435ef1fa9dd12ecb690d7048fdd5fe53702325fc",
+      "assessment": {
+        "language": "pass",
+        "final_language": "pass",
+        "verdict": "pass",
+        "evidence": [
+          "不建議照原案直接實作。",
+          "架構可以縮小。"
+        ],
+        "note": "The initial progress messages and final response are Traditional Chinese. The response preserves the stale-write and recovery findings; detailed mechanisms, prerequisites and verification-method statements are in the appendix. Both model inputs contain zero injected AGENTS instruction blocks."
+      }
+    },
+    {
+      "case": "language-english",
+      "start_utc": "2026-10-21T19:00:49.802476+00:00",
+      "end_utc": "2026-10-21T19:06:09.334516+00:00",
+      "seconds": 319.531,
+      "tokens": {
+        "input_tokens": 285301,
+        "cached_input_tokens": 217856,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 13326,
+        "reasoning_output_tokens": 5387,
+        "total_tokens": 298627
+      },
+      "main_tokens": {
+        "input_tokens": 203953,
+        "cached_input_tokens": 154624,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4761,
+        "reasoning_output_tokens": 2384,
+        "total_tokens": 208714
+      },
+      "reviewer_tokens": {
+        "input_tokens": 81348,
+        "cached_input_tokens": 63232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8565,
+        "reasoning_output_tokens": 3003,
+        "total_tokens": 89913
+      },
+      "main_thread_id": "01a15fd6-6a70-7d13-a1e4-d2c86cd5260f",
+      "reviewer_thread_id": "01a15fd6-d058-7b30-b24d-2f7d45b34fbe",
+      "injected_agents_blocks": 0,
+      "input_sha256": "76a8b5b2806d8f7b3ef388867c8805f09fadc3d17005607596113fd5fafa8069",
+      "answer_sha256": "70d87aeca4ab9f550d9b24b0a0b5e4d952928761fde6c3fdd2a8dd780be63f9a",
+      "reviewer_sha256": "c9bd4cf44f79f3bcc178eccbbca0877d02e2f0255fd87c4ec0777b30d0184684",
+      "assessment": {
+        "language": "pass",
+        "final_language": "pass",
+        "verdict": "pass",
+        "evidence": [
+          "I’ll read the proposal and the $arc9 skill",
+          "Do not implement this proposal as written.",
+          "A smaller CSV import feature is reasonable."
+        ],
+        "note": "The first progress message, later progress updates and final answer are English even though the proposal material is Chinese. The final answer retains the stale-overwrite and recovery findings and puts candidate arrangements and their conditions in the supporting appendix. Both actual model inputs contain zero injected AGENTS instruction blocks."
+      }
+    },
+    {
+      "case": "language-override",
+      "start_utc": "2026-10-21T19:06:09.375585+00:00",
+      "end_utc": "2026-10-21T19:09:41.971464+00:00",
+      "seconds": 212.594,
+      "tokens": {
+        "input_tokens": 214004,
+        "cached_input_tokens": 177920,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11265,
+        "reasoning_output_tokens": 4555,
+        "total_tokens": 225269
+      },
+      "main_tokens": {
+        "input_tokens": 148084,
+        "cached_input_tokens": 128128,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4801,
+        "reasoning_output_tokens": 1956,
+        "total_tokens": 152885
+      },
+      "reviewer_tokens": {
+        "input_tokens": 65920,
+        "cached_input_tokens": 49792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6464,
+        "reasoning_output_tokens": 2599,
+        "total_tokens": 72384
+      },
+      "main_thread_id": "01a15fdb-4acd-7fc2-af17-c430da5c884e",
+      "reviewer_thread_id": "01a15fdb-ad9c-7992-b3cd-d1c981bd65da",
+      "injected_agents_blocks": 0,
+      "input_sha256": "76a8b5b2806d8f7b3ef388867c8805f09fadc3d17005607596113fd5fafa8069",
+      "answer_sha256": "cb7aacb947d60ef862923c4dda22a1aeb41bbd4306a17094dba36763aee50540",
+      "reviewer_sha256": "0b4ad8447da37c85fac123f90e49241aab7c609568a6d29716389d9910a07afa",
+      "assessment": {
+        "language": "pass",
+        "final_language": "pass",
+        "verdict": "pass",
+        "evidence": [
+          "我會先讀取指定的任務檔與 arc9 技能內容",
+          "不建議照原案直接實作。",
+          "以下附錄提供判斷依據、成立條件與驗證方式。"
+        ],
+        "note": "The request is English and explicitly asks for Traditional Chinese. All progress messages and the final answer are Traditional Chinese; the final answer retains the stale-overwrite and recovery findings and groups detailed mechanisms, optional improvements and verification qualifications in the appendix. Both actual model inputs contain zero injected AGENTS instruction blocks. This is a language check; it does not give an additional pass score for required-arrangement classification."
+      }
+    }
+  ]
+}

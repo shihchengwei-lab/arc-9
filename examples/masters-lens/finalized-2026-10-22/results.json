@@ -1,0 +1,733 @@
+{
+  "date": "2026-10-22",
+  "scope": "13 README request scenarios, including three language variations of the same CSV material; supplied-scenario review, not execution of the systems described in the fixtures.",
+  "cli_version": "0.159.1",
+  "model": "gpt-6.1-sol",
+  "effort": "xhigh",
+  "requests": 13,
+  "unique_threads": 26,
+  "core_verdict_pass": 10,
+  "core_verdict_count": 10,
+  "language_pass": 2,
+  "language_count": 3,
+  "total_tokens": {
+    "input_tokens": 3361241,
+    "cached_input_tokens": 2745472,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 108243,
+    "reasoning_output_tokens": 45904,
+    "total_tokens": 3469484
+  },
+  "seconds_sum": 2558.968,
+  "seconds_median": 220.312,
+  "seconds_min": 99.406,
+  "seconds_max": 275.906,
+  "tokens_median": 238747,
+  "package_sha256": "ab8b99828860c2bbb052b3fc855b170f39263326207bdfc9ffe25fa9ec5891cb",
+  "skill_sha256": {
+    "LICENSE": "e47f465cb04d113ef607aa7653f27d435eedd541b5f0bdfe9d8e7bd9ec967c61",
+    "SKILL.md": "7f313c161afce5382dde5660744f07794db4ebace5dd1b7397ebd8c6478868bb",
+    "agents/openai.yaml": "0bd338aef27551b2c707c74e1a7d017c7a86a0cdd16c18fac7683cedb6c3a41b",
+    "references/output.md": "e5f116a1c0f08037d59611dac0e28c2e184496f4ffe05009da6bb8e69ed537c3",
+    "references/review.md": "56847993478a95abdd949cfcf4c3a9bc76750c474c2aa1c8a13f2c96d0338b30"
+  },
+  "assessment_method": "Manual reading against pre-run frozen criteria; one attempt per request; no quality resampling.",
+  "environment_profile": "Host global AGENTS.md remained present in all 26 model threads; includes a Traditional-Chinese directive. config.toml was ignored, but the global instruction file was not.",
+  "neutral_language_report": "tests/reports/arc9-language-neutral-2026-10-22.md",
+  "rows": [
+    {
+      "case": "csv",
+      "name": "Small CSV import proposal",
+      "start_utc": "2026-10-21T18:02:11.395967+00:00",
+      "end_utc": "2026-10-21T18:06:33.373022+00:00",
+      "seconds": 261.968,
+      "tokens": {
+        "input_tokens": 259475,
+        "cached_input_tokens": 219648,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 9425,
+        "reasoning_output_tokens": 3899,
+        "total_tokens": 268900
+      },
+      "main_thread_id": "01a15fa0-bad6-7160-9f9a-ba9138443543",
+      "reviewer_thread_id": "01a15fa1-447c-7f62-a872-6e83ac160bf2",
+      "reviewer_turns": 1,
+      "main_tokens": {
+        "input_tokens": 200441,
+        "cached_input_tokens": 178688,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3706,
+        "reasoning_output_tokens": 1313,
+        "total_tokens": 204147
+      },
+      "reviewer_tokens": {
+        "input_tokens": 59034,
+        "cached_input_tokens": 40960,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5719,
+        "reasoning_output_tokens": 2586,
+        "total_tokens": 64753
+      },
+      "input_sha256": "76a8b5b2806d8f7b3ef388867c8805f09fadc3d17005607596113fd5fafa8069",
+      "answer_sha256": "361adbe9abb2516fe1cbd3ccfdeecf5232ce0b28d3b222450d3584a25c071e2f",
+      "reviewer_sha256": "0922c93edd6edb991d84d0a7b171bfc96f8f9acd0a9f81de98d33c6d4e876240",
+      "body_bullets": 3,
+      "body_non_whitespace_characters": 235,
+      "assessment": {
+        "workflow": "pass",
+        "language": "pass",
+        "routing": "see notes",
+        "body_quote": "不建議直接照方案實作。",
+        "evidence": [
+          "舊工作再被重送，就可能把修正覆蓋回去。",
+          "目前逐筆寫入、最後另標完成，可能留下部分更新",
+          "架構可以先簡化。"
+        ],
+        "routing_note": "The main answer contains the overall simplification recommendation also present in the reviewer task-answer section. Its concrete options and conditions are in the appendix. Reviewer repeats simplification as an optional improvement; inspect this source overlap rather than claiming strict classification fidelity from this broad 'worth implementing' request.",
+        "appendix_marker": "**附錄：",
+        "verdict": "pass",
+        "arrangements": "source overlap",
+        "note": "Correctly rejects direct implementation because retries can overwrite corrections and completion state can diverge from committed data. A simplification recommendation appears in both reviewer task-answer and optional-improvement sections and in the edited main body; detailed candidate arrangements and prerequisites are in the appendix."
+      }
+    },
+    {
+      "case": "security",
+      "name": "Cross-tenant file source",
+      "start_utc": "2026-10-21T18:06:34.019714+00:00",
+      "end_utc": "2026-10-21T18:08:58.159289+00:00",
+      "seconds": 144.141,
+      "tokens": {
+        "input_tokens": 224766,
+        "cached_input_tokens": 155008,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7038,
+        "reasoning_output_tokens": 3140,
+        "total_tokens": 231804
+      },
+      "main_thread_id": "01a15fa4-bd5d-7263-bf02-c2b8eace33a4",
+      "reviewer_thread_id": "01a15fa5-174b-7db2-98dd-f496584d0d11",
+      "reviewer_turns": 1,
+      "main_tokens": {
+        "input_tokens": 149739,
+        "cached_input_tokens": 98560,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3060,
+        "reasoning_output_tokens": 1343,
+        "total_tokens": 152799
+      },
+      "reviewer_tokens": {
+        "input_tokens": 75027,
+        "cached_input_tokens": 56448,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3978,
+        "reasoning_output_tokens": 1797,
+        "total_tokens": 79005
+      },
+      "input_sha256": "e17079f30ab7acb359dd9aec96bd785a16a1c0d0d8be70e99c28bdfd457e2d3d",
+      "answer_sha256": "40cf9ca744c20061a6d7a99690abec8d00fd277ccfa39bc5633dcb941255cde9",
+      "reviewer_sha256": "50ab76d846c24ea71032ff78396827102d3a12e16afef28e51a7eb0bfacb76bf",
+      "body_bullets": 3,
+      "body_non_whitespace_characters": 255,
+      "assessment": {
+        "workflow": "pass",
+        "language": "pass",
+        "routing": "pass",
+        "body_quote": "目前不可交付。",
+        "evidence": [
+          "/tenants/A/../B/customers.csv",
+          "固定寫入 A，並不能保證來源也是 A。",
+          "交付前必須限制實際讀取的檔案來源"
+        ],
+        "routing_note": "Optional narrowing of the background service account and verification/process qualifications are in the explicit appendix; the required source-binding repair remains in the main body.",
+        "appendix_marker": "附錄：",
+        "verdict": "pass",
+        "arrangements": "supported"
+      }
+    },
+    {
+      "case": "overload",
+      "name": "Overload and accepted-work guarantees",
+      "start_utc": "2026-10-21T18:08:58.223580+00:00",
+      "end_utc": "2026-10-21T18:13:34.138947+00:00",
+      "seconds": 275.906,
+      "tokens": {
+        "input_tokens": 284889,
+        "cached_input_tokens": 230784,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11732,
+        "reasoning_output_tokens": 5663,
+        "total_tokens": 296621
+      },
+      "main_thread_id": "01a15fa6-f005-7983-9562-396b87c04f07",
+      "reviewer_thread_id": "01a15fa7-68e2-7dd1-87ae-b7e6a25c1496",
+      "reviewer_turns": 1,
+      "main_tokens": {
+        "input_tokens": 223515,
+        "cached_input_tokens": 186112,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3991,
+        "reasoning_output_tokens": 1523,
+        "total_tokens": 227506
+      },
+      "reviewer_tokens": {
+        "input_tokens": 61374,
+        "cached_input_tokens": 44672,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7741,
+        "reasoning_output_tokens": 4140,
+        "total_tokens": 69115
+      },
+      "input_sha256": "8548b7c81d32caefcce1881ebab06480a792b14d649c7ba93bd97bb6daf0a6d9",
+      "answer_sha256": "cdee202ce30cb68d4533c4876ee877aecabf4bc87df3b5b668c0517c35f9d406",
+      "reviewer_sha256": "28451777da94b37b90179c54c8b14c0fad8bc268df6ae21da0c5ad5feb3acbd1",
+      "body_bullets": 3,
+      "body_non_whitespace_characters": 237,
+      "assessment": {
+        "workflow": "pass",
+        "language": "pass",
+        "routing": "pass",
+        "appendix_marker": "附錄供核對：",
+        "body_quote": "目前方案不可交付。",
+        "evidence": [
+          "活動結束時也估計累積約 2,160 件未完成工作",
+          "可靠接下工作才回覆 202",
+          "前端等待時持續查詢原工作"
+        ],
+        "note": "The response rejects a queue-size-only change, traces false acceptance and duplicate submissions, and proposes bounded/durable admission. Capacity arithmetic, verification conditions and remaining evidence needs are in the appendix; decision-level quantities remain in the body.",
+        "verdict": "pass",
+        "arrangements": "supported"
+      }
+    },
+    {
+      "case": "complete",
+      "name": "Complete implementation with accepted overwrite semantics",
+      "start_utc": "2026-10-21T18:13:34.393463+00:00",
+      "end_utc": "2026-10-21T18:18:00.978822+00:00",
+      "seconds": 266.594,
+      "tokens": {
+        "input_tokens": 460906,
+        "cached_input_tokens": 393984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 12384,
+        "reasoning_output_tokens": 6988,
+        "total_tokens": 473290
+      },
+      "main_thread_id": "01a15fab-26f2-7fd2-b731-49e430fbe02d",
+      "reviewer_thread_id": "01a15fab-a719-75c3-909f-64781f7538d3",
+      "reviewer_turns": 1,
+      "main_tokens": {
+        "input_tokens": 345830,
+        "cached_input_tokens": 317952,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6280,
+        "reasoning_output_tokens": 3959,
+        "total_tokens": 352110
+      },
+      "reviewer_tokens": {
+        "input_tokens": 115076,
+        "cached_input_tokens": 76032,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6104,
+        "reasoning_output_tokens": 3029,
+        "total_tokens": 121180
+      },
+      "input_sha256": "db86977f3e676591bd32619e86e6361f729d41ee43ff45700e74ee84c29c5b28",
+      "answer_sha256": "a04ec429a84ee4045502eb59561af1f8669ca7926dca3a028355ad2e0bec3f41",
+      "reviewer_sha256": "1c0fbb2ec4bd9d5de73f5026231491f5ef112ba93e2714475c6516e3d6c853a9",
+      "body_bullets": 2,
+      "body_non_whitespace_characters": 89,
+      "assessment": {
+        "workflow": "pass",
+        "language": "pass",
+        "routing": "partial",
+        "appendix_marker": "附錄：審查依據",
+        "body_quote": "可以交付。",
+        "evidence": [
+          "可以交付。",
+          "未發現交付前必須修正的實質缺口。",
+          "本次未直接檢查程式或重新執行測試。"
+        ],
+        "note": "Correctly accepts the supplied implementation and accepted overwrite/replay semantics; the reviewer reports no task gap or necessary arrangement. Optional boundary-test documentation and unused mechanisms are in the appendix. Editorial limitation: the second body bullet repeats an unrequested verification-method qualification after the first bullet already says the decision relies on supplied implementation and verification records.",
+        "verdict": "pass",
+        "arrangements": "supported"
+      }
+    },
+    {
+      "case": "authority-base",
+      "name": "R1 selected",
+      "start_utc": "2026-10-21T18:18:01.042745+00:00",
+      "end_utc": "2026-10-21T18:20:25.982824+00:00",
+      "seconds": 144.938,
+      "tokens": {
+        "input_tokens": 270995,
+        "cached_input_tokens": 219520,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6317,
+        "reasoning_output_tokens": 2350,
+        "total_tokens": 277312
+      },
+      "main_thread_id": "01a15faf-3846-7dd0-b022-3c97dd7a296b",
+      "reviewer_thread_id": "01a15faf-9b5e-7f03-89ce-51964c4ce68a",
+      "reviewer_turns": 1,
+      "main_tokens": {
+        "input_tokens": 197419,
+        "cached_input_tokens": 162688,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2835,
+        "reasoning_output_tokens": 1318,
+        "total_tokens": 200254
+      },
+      "reviewer_tokens": {
+        "input_tokens": 73576,
+        "cached_input_tokens": 56832,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3482,
+        "reasoning_output_tokens": 1032,
+        "total_tokens": 77058
+      },
+      "input_sha256": "cec0717f97b81810de71cc2b17152b52b51ef0d8884ab1af7af1ba038405809e",
+      "answer_sha256": "bf87262c7e9825faa333a05abbf9586c07c1aec567c82f35531a36d749dabf5b",
+      "reviewer_sha256": "9c052d525fe217ef0077b17ce60a2ca48ec85f0561f5a38d6bea2ae4f58a5a06",
+      "body_bullets": 2,
+      "body_non_whitespace_characters": 117,
+      "assessment": {
+        "workflow": "pass",
+        "language": "pass",
+        "routing": "pass",
+        "appendix_marker": "**附錄：",
+        "evidence": [
+          "本次指定 R1，要求受理後 30 秒內可下載",
+          "實際時間至少縮短 15 秒",
+          "須另獲明確同意"
+        ],
+        "note": "Retains task-selected R1 and the 30-second deadline, recognizes 45-second noncompliance, and requires implementation improvement plus same-condition verification. An authorized move to R2 is treated as a conditional alternative in the appendix, not a requirement change already granted.",
+        "verdict": "pass",
+        "arrangements": "supported"
+      }
+    },
+    {
+      "case": "authority-memo",
+      "name": "Implementation memo changed, R1 unchanged",
+      "start_utc": "2026-10-21T18:20:26.041855+00:00",
+      "end_utc": "2026-10-21T18:23:06.147311+00:00",
+      "seconds": 160.11,
+      "tokens": {
+        "input_tokens": 231774,
+        "cached_input_tokens": 193152,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6973,
+        "reasoning_output_tokens": 2784,
+        "total_tokens": 238747
+      },
+      "main_thread_id": "01a15fb1-6ea4-70d1-b031-83c33d5e1444",
+      "reviewer_thread_id": "01a15fb1-f589-7c00-8369-8f9110d7b409",
+      "reviewer_turns": 1,
+      "main_tokens": {
+        "input_tokens": 173475,
+        "cached_input_tokens": 151936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4011,
+        "reasoning_output_tokens": 2212,
+        "total_tokens": 177486
+      },
+      "reviewer_tokens": {
+        "input_tokens": 58299,
+        "cached_input_tokens": 41216,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2962,
+        "reasoning_output_tokens": 572,
+        "total_tokens": 61261
+      },
+      "input_sha256": "848b4482a034b0054cf7db1a13d5f61f80f00d3dc835434e6d793b77039153af",
+      "answer_sha256": "c90254c2c1b06bedbcdc9c36a64fa4355394a78190a8a157e60d0a1253cec845",
+      "reviewer_sha256": "218775cf9989037d0a175a0648c650cc1d8a7e4ad66049946f23d2889187d042",
+      "body_bullets": 3,
+      "body_non_whitespace_characters": 189,
+      "assessment": {
+        "verdict": "pass",
+        "arrangements": "extra memo rewrite",
+        "workflow": "pass",
+        "language": "pass",
+        "routing": "follows source",
+        "appendix_marker": "附錄：核對依據與限制",
+        "evidence": [
+          "新增備註不能把標準改成 60 秒。",
+          "將備註更正為「目前 45 秒，未達 R1 的 30 秒要求」"
+        ],
+        "note": "Correctly retains R1 and rejects an implementation memo as authority to relax the deadline. Classification exception: the reviewer includes rewriting the memo in its Necessary arrangements field, and the editor carries it into the main body. The stated commitment concerns completion within 30 seconds; rewriting the memo does not close the 45-versus-30-second gap. This is recorded separately from the correct noncompliance verdict."
+      }
+    },
+    {
+      "case": "authority-authorized",
+      "name": "R2 selected by the task",
+      "start_utc": "2026-10-21T18:23:06.216006+00:00",
+      "end_utc": "2026-10-21T18:25:00.083394+00:00",
+      "seconds": 113.875,
+      "tokens": {
+        "input_tokens": 190609,
+        "cached_input_tokens": 154624,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4492,
+        "reasoning_output_tokens": 1567,
+        "total_tokens": 195101
+      },
+      "main_thread_id": "01a15fb3-e057-7691-8912-e4b83af9a5e5",
+      "reviewer_thread_id": "01a15fb4-5ccc-7241-86da-c3c62750b6c3",
+      "reviewer_turns": 1,
+      "main_tokens": {
+        "input_tokens": 148660,
+        "cached_input_tokens": 129408,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2591,
+        "reasoning_output_tokens": 1051,
+        "total_tokens": 151251
+      },
+      "reviewer_tokens": {
+        "input_tokens": 41949,
+        "cached_input_tokens": 25216,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1901,
+        "reasoning_output_tokens": 516,
+        "total_tokens": 43850
+      },
+      "input_sha256": "f2941bf05f451bba43a3b249a3ccc3e94fb9493dc28fb57ad811885a22e08117",
+      "answer_sha256": "5ee4e11fada4b6d3cfa9ae0353b8903cee195c42bd1a19b20a57a204a74f75ed",
+      "reviewer_sha256": "312ffe8576f6c546ae32bceacf24d01fb0945b73065aaa32fc0aa3abed725d59",
+      "body_bullets": 2,
+      "body_non_whitespace_characters": 134,
+      "assessment": {
+        "verdict": "pass",
+        "arrangements": "supported",
+        "workflow": "pass",
+        "language": "pass",
+        "routing": "pass",
+        "appendix_marker": "核對依據整理於以下附錄",
+        "evidence": [
+          "沒有必須調整的安排。",
+          "可選的文字改善：將備註改為",
+          "並非達標的必要條件"
+        ],
+        "note": "Fresh complete-workflow regression passes: the reviewer reports no gap and no necessary arrangement under task-selected R2; the editor puts the optional memo rewrite and its non-prerequisite qualification together after the appendix boundary. The body retains the 60-second authority and 45-second compliance evidence."
+      }
+    },
+    {
+      "case": "merge-original",
+      "name": "Download and delete both mismatched",
+      "start_utc": "2026-10-21T18:25:00.153189+00:00",
+      "end_utc": "2026-10-21T18:28:40.468235+00:00",
+      "seconds": 220.312,
+      "tokens": {
+        "input_tokens": 216480,
+        "cached_input_tokens": 161536,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10042,
+        "reasoning_output_tokens": 3602,
+        "total_tokens": 226522
+      },
+      "main_thread_id": "01a15fb5-9d67-7c20-8409-f0d818853ccd",
+      "reviewer_thread_id": "01a15fb6-02b7-7653-9774-bfb374c6b90c",
+      "reviewer_turns": 1,
+      "main_tokens": {
+        "input_tokens": 174153,
+        "cached_input_tokens": 136192,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3952,
+        "reasoning_output_tokens": 1996,
+        "total_tokens": 178105
+      },
+      "reviewer_tokens": {
+        "input_tokens": 42327,
+        "cached_input_tokens": 25344,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6090,
+        "reasoning_output_tokens": 1606,
+        "total_tokens": 48417
+      },
+      "input_sha256": "4d14ea32509ad8a8d0f476f3fda20d6556604aa3a8941a24186b18e41b775b43",
+      "answer_sha256": "9aa9d995e459dabc3d32dc25a68b7b9f9298b772ed54fe11577a9416acee70fd",
+      "reviewer_sha256": "c95bad623722130b9f97a3144ec1e4565676751ef996987b4b1c31260c319e62",
+      "body_bullets": 2,
+      "body_non_whitespace_characters": 120,
+      "assessment": {
+        "verdict": "pass",
+        "arrangements": "supported",
+        "workflow": "pass",
+        "language": "pass",
+        "routing": "pass",
+        "appendix_marker": "附錄：修法、依據與驗收",
+        "evidence": [
+          "目前下載與刪除都仍可越權。",
+          "下載檢查該檔案的讀取權限，刪除檢查該檔案的刪除權限。",
+          "兩種修法擇一即可"
+        ],
+        "note": "Finds both mismatches and their shared cause while preserving independently determined read/delete permissions. Accepts either authoritative input if authorization and use bind to the same object. Optional wrappers, alternative details, and verification/process qualifications are confined to the appendix."
+      }
+    },
+    {
+      "case": "merge-read-fixed",
+      "name": "Download fixed, delete mismatched",
+      "start_utc": "2026-10-21T18:28:40.538623+00:00",
+      "end_utc": "2026-10-21T18:31:11.528946+00:00",
+      "seconds": 150.985,
+      "tokens": {
+        "input_tokens": 263702,
+        "cached_input_tokens": 208768,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6531,
+        "reasoning_output_tokens": 1834,
+        "total_tokens": 270233
+      },
+      "main_thread_id": "01a15fb8-fa69-73a2-a0b9-bcaa2840d212",
+      "reviewer_thread_id": "01a15fb9-5d43-7690-a9c2-216d3b3a33f6",
+      "reviewer_turns": 1,
+      "main_tokens": {
+        "input_tokens": 205602,
+        "cached_input_tokens": 183808,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2747,
+        "reasoning_output_tokens": 864,
+        "total_tokens": 208349
+      },
+      "reviewer_tokens": {
+        "input_tokens": 58100,
+        "cached_input_tokens": 24960,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3784,
+        "reasoning_output_tokens": 970,
+        "total_tokens": 61884
+      },
+      "input_sha256": "5d5a0292651b48912f5bb7fb1bec10580566a87141f125f878c87a2276ed62d0",
+      "answer_sha256": "8e6c2bfbb2ebc7faa97839cb16fd4e2ba6087d7ab720d95968c7cc217ab33ef5",
+      "reviewer_sha256": "fdb85b21340e0fbcaa2c8ddb2fafda1b45c50ccb3c5594b750dcbafcc6fa4625",
+      "body_bullets": 2,
+      "body_non_whitespace_characters": 113,
+      "assessment": {
+        "verdict": "pass",
+        "arrangements": "supported",
+        "workflow": "pass",
+        "language": "pass",
+        "routing": "pass",
+        "appendix_marker": "**附錄：",
+        "evidence": [
+          "目前下載已修正，刪除仍有漏洞。",
+          "必要改動在刪除入口。",
+          "目前缺口在檔案對象錯配，沒有證據顯示兩項權限被合併"
+        ],
+        "note": "Drops the repaired download defect and keeps only the deletion mismatch as requiring a repair. Mixed-permission test cases and explicit rejection of obsolete fields are classified as optional improvements in the appendix, with their purpose and conditions."
+      }
+    },
+    {
+      "case": "merge-both-fixed",
+      "name": "Both object bindings fixed",
+      "start_utc": "2026-10-21T18:31:11.592931+00:00",
+      "end_utc": "2026-10-21T18:32:50.992927+00:00",
+      "seconds": 99.406,
+      "tokens": {
+        "input_tokens": 225203,
+        "cached_input_tokens": 207488,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4048,
+        "reasoning_output_tokens": 1206,
+        "total_tokens": 229251
+      },
+      "main_thread_id": "01a15fbb-4856-7ff1-a582-320e91be189d",
+      "reviewer_thread_id": "01a15fbb-a545-75e1-995d-af891d50a61f",
+      "reviewer_turns": 1,
+      "main_tokens": {
+        "input_tokens": 151270,
+        "cached_input_tokens": 141056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2131,
+        "reasoning_output_tokens": 796,
+        "total_tokens": 153401
+      },
+      "reviewer_tokens": {
+        "input_tokens": 73933,
+        "cached_input_tokens": 66432,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1917,
+        "reasoning_output_tokens": 410,
+        "total_tokens": 75850
+      },
+      "input_sha256": "15ef66201c3a301c853dcbd081e9979beb94c8d5fb2d2662770f1372e5733bd2",
+      "answer_sha256": "0df8afd7f256aff068f334d7bb3da9250abf8b7530e78499d043698721592a9e",
+      "reviewer_sha256": "7fc6462adcc1836e105611fdcdd797d94120e9b3ba524eb7738bd07afad4a3cb",
+      "body_bullets": 2,
+      "body_non_whitespace_characters": 131,
+      "assessment": {
+        "verdict": "pass",
+        "arrangements": "supported",
+        "workflow": "pass",
+        "language": "pass",
+        "routing": "pass",
+        "appendix_marker": "**附錄：",
+        "evidence": [
+          "目前下載與刪除都符合要求，沒有本次仍須追加的必要改動。",
+          "未滿足：無。待確認且影響本次判斷的條件：無。必要安排：無。"
+        ],
+        "note": "Recognizes both bindings are fixed, keeps read/delete independently authorized, and removes both historical defects. The reviewer reports no remaining gap or necessary arrangement. Supporting test cases and the verification-method qualification are placed in the appendix."
+      }
+    },
+    {
+      "case": "language-chinese",
+      "name": "Chinese request",
+      "start_utc": "2026-10-21T18:32:51.065152+00:00",
+      "end_utc": "2026-10-21T18:37:01.376086+00:00",
+      "seconds": 250.312,
+      "tokens": {
+        "input_tokens": 182434,
+        "cached_input_tokens": 161536,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10835,
+        "reasoning_output_tokens": 3604,
+        "total_tokens": 193269
+      },
+      "main_thread_id": "01a15fbc-cce9-7b21-b798-2f7f83b1999f",
+      "reviewer_thread_id": "01a15fbd-4cbb-7a21-9d9a-cbd46eb773b4",
+      "reviewer_turns": 1,
+      "main_tokens": {
+        "input_tokens": 139986,
+        "cached_input_tokens": 128128,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4058,
+        "reasoning_output_tokens": 1564,
+        "total_tokens": 144044
+      },
+      "reviewer_tokens": {
+        "input_tokens": 42448,
+        "cached_input_tokens": 33408,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6777,
+        "reasoning_output_tokens": 2040,
+        "total_tokens": 49225
+      },
+      "input_sha256": "76a8b5b2806d8f7b3ef388867c8805f09fadc3d17005607596113fd5fafa8069",
+      "answer_sha256": "861e891c097084f07edb060711185b3eee060b06751dff3efed3dd726009e350",
+      "reviewer_sha256": "5ddfd48966e1005f780916097b9166cca992d0c35ebb9dde00dc3f9f2a109c19",
+      "body_bullets": 3,
+      "body_non_whitespace_characters": 221,
+      "assessment": {
+        "verdict": "pass",
+        "arrangements": "supported (policy choices)",
+        "workflow": "pass",
+        "language": "pass",
+        "routing": "see notes",
+        "appendix_marker": "核對附錄：",
+        "evidence": [
+          "不值得照原案直接實作。",
+          "僅限制同時執行，或讓整份檔案一起成功、一起取消，都不足以防止舊資料覆蓋。",
+          "可選的簡化及其前提"
+        ],
+        "note": "Uses Traditional Chinese and preserves the CSV rejection, stale-retry counterexample, and ordering/recovery concerns. As in the CSV request, a general simplification recommendation remains in the body, while candidate mechanisms and conditions are in the appendix. The reviewer also derives unspecified duplicate-row/error policies from understandable completion/retry results and calls for settling those choices before implementation."
+      }
+    },
+    {
+      "case": "language-english",
+      "name": "English request with Chinese source material",
+      "start_utc": "2026-10-21T18:37:01.449564+00:00",
+      "end_utc": "2026-10-21T18:40:43.262103+00:00",
+      "seconds": 221.812,
+      "tokens": {
+        "input_tokens": 340372,
+        "cached_input_tokens": 267776,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8762,
+        "reasoning_output_tokens": 4351,
+        "total_tokens": 349134
+      },
+      "main_thread_id": "01a15fc0-9efe-7e20-81fb-38b107b4b5a3",
+      "reviewer_thread_id": "01a15fc1-0659-7482-a636-1991366e83ca",
+      "reviewer_turns": 1,
+      "main_tokens": {
+        "input_tokens": 266802,
+        "cached_input_tokens": 227968,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3806,
+        "reasoning_output_tokens": 2033,
+        "total_tokens": 270608
+      },
+      "reviewer_tokens": {
+        "input_tokens": 73570,
+        "cached_input_tokens": 39808,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4956,
+        "reasoning_output_tokens": 2318,
+        "total_tokens": 78526
+      },
+      "input_sha256": "76a8b5b2806d8f7b3ef388867c8805f09fadc3d17005607596113fd5fafa8069",
+      "answer_sha256": "6a80ae0183e1cb60ac0d0da8ba2560171984b173f3323f8e4deb96bdd6f5b915",
+      "reviewer_sha256": "d38bbee53cb00d4ab3d2718d3328c61ace873770f42b698098387c7fd238c657",
+      "body_bullets": 3,
+      "body_non_whitespace_characters": 605,
+      "assessment": {
+        "verdict": "pass",
+        "arrangements": "source classifies simplification as required",
+        "workflow": "pass",
+        "language": "not isolated",
+        "final_language": "pass",
+        "appendix_marker": "**Appendix:",
+        "evidence": [
+          "Do not implement the proposal as written.",
+          "Fix update priority and recovery first.",
+          "我會依指定的 arc9 技能進行唯讀審查"
+        ],
+        "note": "The final response is English and correctly rejects the proposal, with candidate mechanisms and their conditions in the appendix. The initial main-model progress message is Traditional Chinese. Prompt audit found an injected global AGENTS directive requiring Traditional Chinese despite ignore-user-config and project_doc_max_bytes=0, so this run does not isolate default language behavior. The reviewer also labels scope simplification as a necessary adjustment; that is recorded separately from the correct rejection verdict.",
+        "routing": "see notes"
+      }
+    },
+    {
+      "case": "language-override",
+      "name": "English request, Traditional Chinese requested",
+      "start_utc": "2026-10-21T18:40:43.328388+00:00",
+      "end_utc": "2026-10-21T18:44:51.933715+00:00",
+      "seconds": 248.609,
+      "tokens": {
+        "input_tokens": 209636,
+        "cached_input_tokens": 171648,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 9664,
+        "reasoning_output_tokens": 4916,
+        "total_tokens": 219300
+      },
+      "main_thread_id": "01a15fc4-01ae-70e2-855b-31c86cc8c414",
+      "reviewer_thread_id": "01a15fc4-5fe3-7112-8893-569d0524d22f",
+      "reviewer_turns": 1,
+      "main_tokens": {
+        "input_tokens": 135435,
+        "cached_input_tokens": 115584,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4564,
+        "reasoning_output_tokens": 2397,
+        "total_tokens": 139999
+      },
+      "reviewer_tokens": {
+        "input_tokens": 74201,
+        "cached_input_tokens": 56064,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5100,
+        "reasoning_output_tokens": 2519,
+        "total_tokens": 79301
+      },
+      "input_sha256": "76a8b5b2806d8f7b3ef388867c8805f09fadc3d17005607596113fd5fafa8069",
+      "answer_sha256": "bf61f37f08b0d69165ee0ae8682cad257ca509913da78af0b4264dd32ce4d36e",
+      "reviewer_sha256": "c13f9ed08f5123b64cf89022cbb637cd163c3e07060c80ab68b21beb915f8259",
+      "body_bullets": 3,
+      "body_non_whitespace_characters": 173,
+      "assessment": {
+        "verdict": "pass",
+        "arrangements": "supported (candidate policy)",
+        "workflow": "pass",
+        "language": "pass",
+        "final_language": "pass",
+        "appendix_marker": "附錄供核對：",
+        "evidence": [
+          "不建議照原案直接實作。",
+          "系統必須能阻止舊資料覆蓋新資料",
+          "材料並未要求整份匯入必須全部成功或全部失敗"
+        ],
+        "note": "The English request explicitly asks for Traditional Chinese; the final response is Traditional Chinese and preserves the stale-retry, recovery and scope findings. It states the priority and transaction prerequisites in the appendix rather than treating atomicity alone as a stale-write fix. This host-profile run also contains the existing global Traditional-Chinese directive.",
+        "routing": "see notes"
+      }
+    }
+  ]
+}

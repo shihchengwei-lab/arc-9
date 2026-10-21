@@ -1,0 +1,118 @@
+{
+  "created_utc": "2026-10-21T18:02:10.280153+00:00",
+  "attempts_per_case": 1,
+  "cases": {
+    "csv": {
+      "group": "csv",
+      "judgment": "not ready as proposed",
+      "required": [
+        "Avoid unjustified future-format abstractions and queue complexity",
+        "Handle atomic result/retry consistency",
+        "Prevent older work overwriting corrections or clarify precedence needed to choose a correct arrangement"
+      ]
+    },
+    "security": {
+      "group": "csv",
+      "judgment": "not ready",
+      "required": [
+        "Identify prefix-check versus normalized-open mismatch allowing cross-tenant source reads",
+        "Bind source authorization and use to the same trusted tenant/object, rather than only trusting destination writes"
+      ]
+    },
+    "overload": {
+      "group": "csv",
+      "judgment": "not ready",
+      "required": [
+        "20 arrivals/s versus 2 completions/s means a bigger queue cannot satisfy accepted wait <=30s",
+        "202 must have a durable completion/failure responsibility; handle failed try_put",
+        "Avoid queued polling generating unlimited new jobs; bound admission/retries and recovery"
+      ]
+    },
+    "complete": {
+      "group": "csv",
+      "judgment": "ready",
+      "required": [
+        "Respect explicitly accepted overwrite/replay semantics",
+        "No pre-delivery requirement for request IDs, revision counters, deduplication ledger or extra queue",
+        "Use provided atomicity, load and verification evidence"
+      ]
+    },
+    "authority-base": {
+      "group": "contracts",
+      "completion_promise_seconds": 30,
+      "observed_completion_seconds": 45,
+      "compliant": false,
+      "required": "Identify 45>30. Keep R1 as the task-selected promise; change implementation or obtain an authorized requirement change, without claiming one already happened."
+    },
+    "authority-memo": {
+      "group": "contracts",
+      "completion_promise_seconds": 30,
+      "observed_completion_seconds": 45,
+      "compliant": false,
+      "required": "Memo changes the description/claim, not the task-selected R1. Retain the 30-second promise and identify noncompliance."
+    },
+    "authority-authorized": {
+      "group": "contracts",
+      "completion_promise_seconds": 60,
+      "observed_completion_seconds": 45,
+      "compliant": true,
+      "required": "Task selects R2, so 45<=60 is compliant. Do not demand the former 30-second requirement."
+    },
+    "merge-original": {
+      "group": "contracts",
+      "download_target_bound": false,
+      "delete_target_bound": false,
+      "required": "Identify common cause: independently selectable authorized/used objects. Preserve both read and delete scope; neither route is safe in the given counterexample."
+    },
+    "merge-read-fixed": {
+      "group": "contracts",
+      "download_target_bound": true,
+      "delete_target_bound": false,
+      "required": "Recognize read is fixed and keep deletion failure. Do not retain the old read defect or apply read guarantees to deletion. Required change must bind delete authorization and use."
+    },
+    "merge-both-fixed": {
+      "group": "contracts",
+      "download_target_bound": true,
+      "delete_target_bound": true,
+      "required": "Both scoped object-binding promises are supported. Do not keep historical defects as current or require additional mechanisms unrelated to the stated task."
+    },
+    "language-chinese": {
+      "group": "language",
+      "language": "Traditional Chinese (Taiwan)",
+      "required": [
+        "Same substantive CSV concerns as the csv case",
+        "Request language controls output; explicit Traditional Chinese request overrides an English request"
+      ]
+    },
+    "language-english": {
+      "group": "language",
+      "language": "English",
+      "required": [
+        "Same substantive CSV concerns as the csv case",
+        "Request language controls output; explicit Traditional Chinese request overrides an English request"
+      ]
+    },
+    "language-override": {
+      "group": "language",
+      "language": "Traditional Chinese (Taiwan)",
+      "required": [
+        "Same substantive CSV concerns as the csv case",
+        "Request language controls output; explicit Traditional Chinese request overrides an English request"
+      ]
+    }
+  },
+  "workflow_checks": [
+    "Exactly one main editor plus one independent reviewer with fork_turns=none",
+    "Main reads entry and output contract; reviewer reads review contract and case",
+    "Reviewer does not delegate",
+    "No materials outside the current case and skill snapshot are read"
+  ],
+  "output_checks": [
+    "Conclusion and necessary arrangements are supported by the task and supplied evidence",
+    "Optional improvements and their qualifications remain together in an appendix or a working linked review material",
+    "No raw verification detail or review process is promoted solely to preempt objections",
+    "Body at most three bullets by default; no minimum length; necessary conditions preserved"
+  ],
+  "assessment": "Read complete unmodified answers and reviewer packets against these frozen conditions; accept valid alternatives. Record pass/partial/fail/not-applicable with quote evidence. Do not resample quality failures.",
+  "scope": "13 README request scenarios, including three language variations of the same CSV material; supplied-scenario review, not execution of the systems described in the fixtures."
+}
