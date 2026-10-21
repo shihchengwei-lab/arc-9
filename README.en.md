@@ -4,52 +4,47 @@
 
 [繁體中文](README.md)
 
-A proposal can look workable while leaving gaps in data updates, permissions, or recovery after interruption.
+A proposal can look workable while allowing old data to overwrite corrections, exposing someone else’s files, or failing when interrupted work is retried.
 
-`$arc9` is a manually invoked skill for read-only engineering reviews. It traces actual operations, explains whether a proposal needs changes, and identifies where to change it and why. When a proposal already meets the requirements, it says so.
+`$arc9` is a review tool you invoke manually in Codex. It traces data and operations, explains whether a proposal meets its requirements, and identifies what needs to change and why. When the proposal already meets the requirements, it says so.
 
-Requires a host with independent sub-agent support. One sub-agent performs the review; the main model edits the body and appendix separately.
+Reviews look for changes to data, permissions and operations that prevent the failure from occurring. They only read materials you supply or permit, without changing code, files, settings or other systems.
 
-Its guiding principle is to make illegal states unrepresentable: arrange data and operations so that states forbidden by the requirements cannot be created. Reviews use materials supplied or permitted by the task and do not change code, files, settings, or external state.
+## Results, cost and limitations
 
-## Current results and cost
+- **Results:** In the ten review scenarios tested on 2026-10-22, arc9 correctly judged whether each proposal met its specified requirements, including after requirements changed or defects were fixed.
+- **Cost:** The median complete review took about 3 minutes 40 seconds. Median combined usage of the assistant and independent reviewer was about 239,000 tokens. Tokens measure text processed by a model; this count includes repeated and cached content.
+- **Known limitations:** In one case, it treated an optional wording change as required, adding unnecessary work to the recommendation. In another, it repeated information about the review process, making the answer longer.
 
-The 2026-10-22 rerun matched the expected delivery verdicts in all 10 proposal and requirement states. Three language requests also met expectations in a separate environment without global language instructions.
-
-The main suite's median complete workflow took about 220 seconds and 239,000 tokens (main model plus reviewer, including cached input; gpt-6.1-sol / xhigh). Remaining observations include treating a memo rewrite as required and repeating verification-method qualifications in the body.
-
-[Current report](tests/reports/arc9-finalized-2026-10-22.md) · [Complete inputs and answers](examples/masters-lens/finalized-2026-10-22/README.md) · [Language calibration report](tests/reports/arc9-language-neutral-2026-10-22.md)
+The [verification report](tests/reports/arc9-finalized-2026-10-22.md) contains individual results, model settings and usage calculations. The [language test report](tests/reports/arc9-language-neutral-2026-10-22.md) records Chinese requests, English requests and an explicit request for Traditional Chinese.
 
 ## Representative cases
 
-These summaries come from [this round's reviews of four CSV import proposals](examples/masters-lens/finalized-2026-10-22/README.md).
+These summaries come from this round’s reviews of four CSV import proposals. [Complete inputs and answers](examples/masters-lens/finalized-2026-10-22/README.md)
 
-| Proposed system | Review finding |
+| Proposed system | What the review found |
 |---|---|
-| Small imports get a factory for future formats and a queue; old jobs can overwrite corrections. | Simplify the flow and measure execution time. Confirm which updates should take precedence, then enforce that order during writes. |
-| The API checks a path prefix, but the file service interprets the path differently. | Identify the cross-tenant read and derive both source and destination from a trusted tenant identity. |
-| Twenty jobs arrive per second while two finish, with a maximum wait of 30 seconds. | A larger queue cannot meet the commitment. Limit acceptance and handle resubmissions and recovery. |
-| A simple import flow permits resubmission to overwrite data; transactions and verification records meet the requirements. | Ready to ship, with no changes required before delivery. |
+| Small imports get support for unneeded formats and a queue; old jobs can overwrite later corrections. | Trace how old data can replace a correction. Decide which update takes precedence, then use measured execution time to decide whether a queue is needed. |
+| The system checks an authorized directory, but opening the file can reach someone else’s directory. | Derive the permitted data scope from the signed-in identity and enforce that same scope when opening files. |
+| Twenty jobs arrive per second while two finish, with a maximum wait of 30 seconds. | A larger queue cannot meet the commitment. Limit acceptance and handle resubmissions and interrupted work. |
+| The requirements accept resubmissions overwriting data, and data updates and load verification meet those requirements. | Ready to ship, with no additional changes required. |
 
 ## Get started
 
-1. [Download the ZIP](dist/arc-9.zip), extract it, and place the `arc9` folder in Codex’s skills directory. The default Windows location is `C:\Users\<username>\.codex\skills\`. If `CODEX_HOME` is set, use its `skills` subdirectory.
+The host must be able to start an independent AI reviewer, called a sub-agent. It examines the proposal, and the assistant in your conversation then edits the review into a summary and appendix.
+
+1. [Download the ZIP](dist/arc-9.zip), extract it, and place the `arc9` folder in Codex’s skills directory. The default Windows location is `C:\Users\<username>\.codex\skills\`. If you set a different Codex data directory with `CODEX_HOME`, use its `skills` subdirectory.
 2. On the next turn, invoke it in the current task discussion:
 
 ```text
 $arc9 Review this proposal and identify any necessary changes.
 ```
 
-The response briefly covers the judgment, evidence, and any unknowns or next steps that affect the decision. It follows the request’s language by default; you can specify a different language or length.
+The body gives the judgment, reasons and necessary changes. Detailed analysis and optional improvements go in the appendix. Responses follow the request’s language by default; you can specify another language or length.
 
-You can also provide the path to [SKILL.md](dist/skills/arc9/SKILL.md) within the complete `arc9` folder and ask the model to read and use it. Keep the `references` folder alongside it.
+You can also provide the full path to [SKILL.md](dist/skills/arc9/SKILL.md) and ask the model to read and use it. Keep the complete `arc9` folder, including `references`.
 
-## Full cases and records
-
-- Current complete workflow: [Inputs, answers and independent reviews for 13 requests](examples/masters-lens/finalized-2026-10-22/README.md) · [Results, cost and assessments](tests/reports/arc9-finalized-2026-10-22.md)
-- Calibration without global language instructions: [Complete outputs for three requests](examples/masters-lens/finalized-2026-10-22/neutral-language/README.md) · [Execution report](tests/reports/arc9-language-neutral-2026-10-22.md)
-
-See the [maintenance instructions](MAINTENANCE.md) for prompt sources, packaging checks, and rebuild commands.
+See the [maintenance instructions](MAINTENANCE.md) for prompt sources, packaging checks and rebuild commands.
 
 ## License
 
