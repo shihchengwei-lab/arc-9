@@ -6,6 +6,8 @@
 
 [drafts/arc9.md](drafts/arc9.md) 維護入口與 sub-agent 接線；[第一層](drafts/references/review.md) 維護審查契約與具名場景，[第二層](drafts/references/output.md) 維護輸出編輯契約。各項規則只在其負責的來源維護；不要直接修改 `dist/` 中的產物。
 
+第一層只交接一份條件判斷，分開記錄修正候選、取證與可選改善。第二層從同一份結果選正文及附錄。
+
 [封裝腳本](scripts/package_skills.py) 維護呼叫名稱與介面描述，為入口加上 SKILL.md 識別資訊，複製兩份參考文件，另產生 agents/openai.yaml。單一成品名稱為 `arc9`，設定 `allow_implicit_invocation: false`，維持使用者明確呼叫。
 
 成品目錄與 ZIP 均只含 `arc9`，內有 SKILL.md、references/review.md、references/output.md、agents/openai.yaml 與 LICENSE，共 5 個檔案。授權文字來自根目錄 LICENSE。封裝程式、測試與研究材料不進入 ZIP；腳本不安裝、發布或呼叫模型。
@@ -28,10 +30,10 @@ python -B -X utf8 -m unittest discover -s tests -v
 
 ## 提交範圍
 
-提交維護來源、封裝腳本、可重跑測試、說明與成品，以及下列現行驗證材料：
+提交維護來源、封裝腳本、可重跑測試、說明與成品，以及下列公開驗證材料：
 
 - [2026-10-22 完整流程驗證](tests/reports/arc9-finalized-2026-10-22.md)：13 次請求的判斷、分類與編輯結果及成本。
 - [語言校驗](tests/reports/arc9-language-neutral-2026-10-22.md)：排除全域語言指令後的三次完整流程。
 - [公開案例資料](examples/masters-lens/finalized-2026-10-22/README.md)：題目、受測技能快照、原始回答、獨立審查輸出與逐項紀錄。
 
-研究素材、模型原始執行紀錄、一次性實驗及交接紀錄由 .gitignore 排除，保留在本機；重建與封裝檢查不依賴這些檔案。公開文件與案例入口對應現行版本。
+研究素材、模型原始執行紀錄、一次性實驗及交接紀錄由 .gitignore 排除，保留在本機；重建與封裝檢查不依賴這些檔案。公開測試與案例對應各自的受測快照。

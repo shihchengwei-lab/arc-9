@@ -20,7 +20,7 @@ The [verification report](tests/reports/arc9-finalized-2026-10-22.md) contains i
 
 ## Representative cases
 
-These summaries come from this round’s reviews of four CSV import proposals. [Complete inputs and answers](examples/masters-lens/finalized-2026-10-22/README.md)
+These summaries come from the four CSV import proposals reviewed on 2026-10-22. [Complete inputs and answers](examples/masters-lens/finalized-2026-10-22/README.md)
 
 | Proposed system | What the review found |
 |---|---|
@@ -40,7 +40,7 @@ The host must be able to start an independent AI reviewer, called a sub-agent. I
 $arc9 Review this proposal and identify any necessary changes.
 ```
 
-The body gives the judgment, reasons and necessary changes. Detailed analysis and optional improvements go in the appendix. Responses follow the request’s language by default; you can specify another language or length.
+The body gives the judgment, reasons, and next steps. It separates required fixes from evidence that could change the decision. Detailed analysis and optional improvements go in the appendix. Responses follow the request’s language by default. You can specify another language or length.
 
 You can also provide the full path to [SKILL.md](dist/skills/arc9/SKILL.md) and ask the model to read and use it. Keep the complete `arc9` folder, including `references`.
 
