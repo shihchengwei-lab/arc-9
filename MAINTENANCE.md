@@ -6,7 +6,7 @@
 
 [drafts/arc9.md](drafts/arc9.md) 維護入口與 sub-agent 接線；[第一層](drafts/references/review.md) 維護審查契約與具名場景，[第二層](drafts/references/output.md) 維護輸出編輯契約。各項規則只在其負責的來源維護；不要直接修改 `dist/` 中的產物。
 
-第一層用 TypeScript 型別定義審查資料與交接欄位，用同樣語法的偽程式碼推導交付判定，並用條列說明審查步驟與觀察方法。主模型將編輯脈絡與審查結果交給第二層，從同一份結果選正文及附錄，保留成組改動及替代關係。
+入口及兩層契約用 TypeScript 型別定義各自負責的交接欄位，用同樣語法的偽程式碼寫固定推導與預設規則。主模型把編輯脈絡與審查結果交給第二層，先選正文，再從其餘材料整理附錄，保留成組改動及替代關係。
 
 [封裝腳本](scripts/package_skills.py) 維護呼叫名稱與介面描述，為入口加上 SKILL.md 識別資訊，複製兩份參考文件，另產生 agents/openai.yaml。單一成品名稱為 `arc9`，設定 `allow_implicit_invocation: false`，維持使用者明確呼叫。
 
