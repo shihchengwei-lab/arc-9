@@ -1,4 +1,5 @@
 import importlib.util
+import os
 import tempfile
 import unittest
 import zipfile
@@ -165,6 +166,135 @@ class PackagingTests(unittest.TestCase):
             archive.write_bytes(b"broken archive")
             with self.assertRaises(ValueError):
                 self.packager.package(ROOT, output, check=True)
+
+    @unittest.skipUnless(os.name == "nt", "requires Windows directory junctions")
+    def test_package_rejects_output_junctions_before_changing_any_files(self):
+        from _winapi import CreateJunction
+
+        for linked_path in ("parent", "dist", "dist/skills", f"dist/skills/{SKILL}/references"):
+            for check in (True, False):
+                with self.subTest(linked_path=linked_path, check=check), tempfile.TemporaryDirectory() as temporary:
+                    fixture = Path(temporary)
+                    outside = fixture / "outside"
+                    outside.mkdir()
+                    sentinel = outside / "keep.txt"
+                    sentinel.write_bytes(b"keep this")
+                    if linked_path == "parent":
+                        junction = fixture / "parent"
+                        output = junction / "dist"
+                    else:
+                        junction = fixture / linked_path
+                        output = fixture / "dist"
+                    junction.parent.mkdir(parents=True, exist_ok=True)
+                    obsolete = output / "skills/obsolete.txt"
+                    if junction in obsolete.parents:
+                        obsolete = None
+                    else:
+                        obsolete.write_bytes(b"leave this on rejection")
+
+                    CreateJunction(str(outside), str(junction))
+                    try:
+                        with self.assertRaisesRegex(ValueError, "linked path"):
+                            self.packager.package(ROOT, output, check=check)
+                        self.assertEqual(set(outside.iterdir()), {sentinel})
+                        self.assertEqual(sentinel.read_bytes(), b"keep this")
+                        if obsolete is not None:
+                            self.assertEqual(obsolete.read_bytes(), b"leave this on rejection")
+                    finally:
+                        junction.rmdir()
+
+    def test_rebuild_replaces_hard_linked_outputs_without_overwriting_external_files(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = Path(temporary)
+            output = fixture / "dist"
+            self.packager.package(ROOT, output)
+            archive = output / "arc-9.zip"
+            skill = output / f"skills/{SKILL}/SKILL.md"
+            sentinels = {archive: fixture / "outside.zip", skill: fixture / "outside.md"}
+            for target, sentinel in sentinels.items():
+                sentinel.write_bytes(b"keep this")
+                target.unlink()
+                os.link(sentinel, target)
+
+            with self.assertRaises(ValueError):
+                self.packager.package(ROOT, output, check=True)
+            for target, sentinel in sentinels.items():
+                self.assertTrue(target.samefile(sentinel))
+
+            self.packager.package(ROOT, output)
+            self.packager.package(ROOT, output, check=True)
+            for target, sentinel in sentinels.items():
+                self.assertEqual(sentinel.read_bytes(), b"keep this")
+                self.assertFalse(target.samefile(sentinel))
+
+    @unittest.skipUnless(os.name == "nt", "requires exact Windows paths")
+    def test_package_rejects_names_that_win32_would_rewrite(self):
+        from _winapi import CreateJunction
+
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = Path(temporary)
+            output = fixture / "dist"
+            self.packager.package(ROOT, output)
+            skill = output / f"skills/{SKILL}/SKILL.md"
+            original_skill = skill.read_bytes()
+            obsolete = skill.parent / "obsolete.txt"
+            obsolete.write_bytes(b"leave this on rejection")
+            outside = fixture / "outside"
+            outside.mkdir()
+            sentinel = outside / "keep.txt"
+            sentinel.write_bytes(b"keep this")
+            exact_output = Path("\\\\?\\" + str(output))
+            skill_dir = f"skills/{SKILL}"
+
+            for relative, junction in (
+                (f"{skill_dir}/SKILL.md.", False),
+                (f"{skill_dir}/SKILL.md..", False),
+                (f"{skill_dir}/SKILL.md ", False),
+                (f"{skill_dir}/references.", True),
+                ("arc-9.zip.", False),
+                ("arc-9.zip ", False),
+                ("masters-lenses.zip.", False),
+                ("skills.", True),
+            ):
+                with self.subTest(relative=relative):
+                    entry = exact_output / relative
+                    if junction:
+                        CreateJunction(str(outside), str(entry))
+                    else:
+                        entry.write_bytes(b"ambiguous name")
+                    try:
+                        for check in (True, False):
+                            with self.assertRaisesRegex(ValueError, "ambiguous Windows name"):
+                                self.packager.package(ROOT, output, check=check)
+                        self.assertEqual(skill.read_bytes(), original_skill)
+                        self.assertEqual(obsolete.read_bytes(), b"leave this on rejection")
+                        self.assertEqual(set(outside.iterdir()), {sentinel})
+                        self.assertEqual(sentinel.read_bytes(), b"keep this")
+                        if junction:
+                            self.assertTrue(entry.is_dir())
+                        else:
+                            self.assertEqual(entry.read_bytes(), b"ambiguous name")
+                    finally:
+                        if junction:
+                            entry.rmdir()
+                        else:
+                            entry.unlink()
+
+    def test_check_detects_wrong_case_and_rebuild_restores_package_names(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary)
+            self.packager.package(ROOT, output)
+            skills = output / "skills"
+            misnamed = skills / SKILL.upper()
+            (skills / SKILL).rename(skills / "renamed").rename(misnamed)
+            (misnamed / "SKILL.md").rename(misnamed / "renamed.md").rename(misnamed / "skill.md")
+
+            with self.assertRaisesRegex(ValueError, "Package differs"):
+                self.packager.package(ROOT, output, check=True)
+            self.packager.package(ROOT, output)
+            self.packager.package(ROOT, output, check=True)
+            self.assertEqual({path.name for path in skills.iterdir()}, {SKILL})
+            self.assertIn("SKILL.md", {path.name for path in (skills / SKILL).iterdir()})
 
 
 if __name__ == "__main__":

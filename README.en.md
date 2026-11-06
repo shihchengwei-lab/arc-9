@@ -10,17 +10,9 @@ A proposal can look workable while allowing old data to overwrite corrections, e
 
 Reviews look for changes to data, permissions and operations that prevent the failure from occurring. They only read materials you supply or permit, without changing code, files, settings or other systems.
 
-## Results, cost and limitations
-
-- **Results:** In the ten review scenarios tested on 2026-10-22, arc9 correctly judged whether each proposal met its specified requirements, including after requirements changed or defects were fixed.
-- **Cost:** The median complete review took about 3 minutes 40 seconds. Median combined usage of the assistant and independent reviewer was about 239,000 tokens. Tokens measure text processed by a model; this count includes repeated and cached content.
-- **Known limitations:** In one case, it treated an optional wording change as required, adding unnecessary work to the recommendation. In another, it repeated information about the review process, making the answer longer.
-
-The [verification report](tests/reports/arc9-finalized-2026-10-22.md) contains individual results, model settings and usage calculations. The [language test report](tests/reports/arc9-language-neutral-2026-10-22.md) records Chinese requests, English requests and an explicit request for Traditional Chinese.
-
 ## Representative cases
 
-These summaries come from the four CSV import proposals reviewed on 2026-10-22. [Complete inputs and answers](examples/masters-lens/finalized-2026-10-22/README.md)
+See the [full inputs and answers](examples/masters-lens/finalized-2026-10-22/README.md) for the four CSV import cases.
 
 | Proposed system | What the review found |
 |---|---|
@@ -31,7 +23,7 @@ These summaries come from the four CSV import proposals reviewed on 2026-10-22. 
 
 ## Get started
 
-The host must be able to start an independent AI reviewer, called a sub-agent. It examines the proposal, and the assistant in your conversation then edits the review into a summary and appendix.
+Use a Codex environment that supports independent reviewers (sub-agents).
 
 1. [Download the ZIP](dist/arc-9.zip), extract it, and place the `arc9` folder in Codex’s skills directory. The default Windows location is `C:\Users\<username>\.codex\skills\`. If you set a different Codex data directory with `CODEX_HOME`, use its `skills` subdirectory.
 2. On the next turn, invoke it in the current task discussion:
@@ -40,11 +32,11 @@ The host must be able to start an independent AI reviewer, called a sub-agent. I
 $arc9 Review this proposal and identify any necessary changes.
 ```
 
-The body gives the judgment, reasons, and next steps. It separates required fixes from evidence that could change the decision. Detailed analysis and optional improvements go in the appendix. Responses follow the request’s language by default. You can specify another language or length.
+The response explains the verdict, reasons and next steps, separating required fixes from questions that need verification. It follows the request’s language by default. You can specify a language or length.
 
 You can also provide the full path to [SKILL.md](dist/skills/arc9/SKILL.md) and ask the model to read and use it. Keep the complete `arc9` folder, including `references`.
 
-See the [maintenance instructions](MAINTENANCE.md) for prompt sources, packaging checks and rebuild commands.
+See the [maintenance instructions](MAINTENANCE.md) for rebuild and test commands.
 
 ## License
 

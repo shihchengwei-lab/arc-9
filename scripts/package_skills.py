@@ -3,8 +3,11 @@
 import argparse
 import io
 import json
+import os
+import stat
 import zipfile
 from pathlib import Path
+from uuid import uuid4
 
 
 SKILL_NAME = "arc9"
@@ -12,8 +15,89 @@ REFERENCE_NAMES = ("review.md", "output.md")
 DESCRIPTION = "使用者呼叫 arc9 濾鏡時，以唯讀方式依任務材料審查方案、說明未知並提出必要改動建議。"
 
 
+def validate_output_name(path):
+    if os.name == "nt" and path.name != ".." and path.name.rstrip(" .") != path.name:
+        raise ValueError(f"Package output contains an ambiguous Windows name: {path}")
+
+
+def output_mode(path):
+    validate_output_name(path)
+    try:
+        entry = path.lstat()
+    except FileNotFoundError:
+        return None
+    if stat.S_ISLNK(entry.st_mode) or (
+        getattr(entry, "st_file_attributes", 0) & stat.FILE_ATTRIBUTE_REPARSE_POINT
+    ):
+        raise ValueError(f"Package output contains a linked path: {path}")
+    return entry.st_mode
+
+
+def output_directory_exists(path):
+    mode = output_mode(path)
+    if mode is None:
+        return False
+    if not stat.S_ISDIR(mode):
+        raise ValueError(f"Package output requires a directory: {path}")
+    return True
+
+
+def existing_outputs(output, skills_output):
+    for directory in reversed(output.parents):
+        output_directory_exists(directory)
+
+    files, directories = [], []
+    if not output_directory_exists(output):
+        return files, directories
+
+    archives = (output / "arc-9.zip", output / "masters-lenses.zip")
+    managed_paths = (skills_output, *archives)
+    names = {path.name for path in output.iterdir()}
+    if os.name == "nt":
+        managed_names = {path.name.casefold() for path in managed_paths}
+        for name in names:
+            if name.rstrip(" .").casefold() in managed_names:
+                validate_output_name(output / name)
+    for path in managed_paths:
+        if path.name not in names and output_mode(path) is not None:
+            raise ValueError(f"Package output name differs from expected: {path}")
+
+    pending = [skills_output] if output_directory_exists(skills_output) else []
+    while pending:
+        for path in pending.pop().iterdir():
+            mode = output_mode(path)
+            if mode is None:
+                raise ValueError(f"Package output changed during inspection: {path}")
+            if stat.S_ISDIR(mode):
+                directories.append(path)
+                pending.append(path)
+            elif stat.S_ISREG(mode):
+                files.append(path)
+            else:
+                raise ValueError(f"Package output requires a regular file or directory: {path}")
+
+    for path in archives:
+        mode = output_mode(path)
+        if mode is not None:
+            if not stat.S_ISREG(mode):
+                raise ValueError(f"Package archive requires a regular file: {path}")
+            files.append(path)
+    return files, directories
+
+
+def replace_output_file(path, content):
+    temporary = path.with_name(f".{path.name}.{uuid4().hex}.tmp")
+    stream = temporary.open("xb")
+    try:
+        with stream:
+            stream.write(content)
+        temporary.replace(path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
 def package(root, output, check=False):
-    root, output = Path(root), Path(output)
+    root, output = Path(root), Path(output).absolute()
     approved = (root / f"drafts/{SKILL_NAME}.md").read_text(encoding="utf-8").strip()
     license_text = (root / "LICENSE").read_bytes()
     quoted_description = json.dumps(DESCRIPTION, ensure_ascii=False)
@@ -52,22 +136,17 @@ def package(root, output, check=False):
         for directory in (skills_output / relative).parents
         if skills_output in directory.parents
     }
-    existing_paths = set(skills_output.rglob("*"))
-    if any(not path.resolve().is_relative_to(skills_output.resolve())
-           for path in existing_paths):
-        raise ValueError("Package output escapes skills directory")
-    existing_paths.update(
-        path for path in (output / "arc-9.zip", output / "masters-lenses.zip")
-        if path.exists()
-    )
-    obsolete_files = {path for path in existing_paths if path.is_file()} - set(expected)
-    obsolete_directories = {
-        path for path in existing_paths if path.is_dir()
-    } - expected_directories
+    existing_files, existing_directories = existing_outputs(output, skills_output)
+    expected_file_names = {path.parts for path in expected}
+    expected_directory_names = {path.parts for path in expected_directories}
+    obsolete_files = [path for path in existing_files if path.parts not in expected_file_names]
+    obsolete_directories = [
+        path for path in existing_directories if path.parts not in expected_directory_names
+    ]
     if check:
         differences = [str(path) for path, content in expected.items()
                        if not path.is_file() or path.read_bytes() != content]
-        differences += [str(path) for path in sorted(obsolete_files | obsolete_directories)]
+        differences += [str(path) for path in sorted(obsolete_files + obsolete_directories)]
         if differences:
             raise ValueError("Package differs from approved sources: " + ", ".join(differences))
     else:
@@ -77,7 +156,7 @@ def package(root, output, check=False):
             path.rmdir()
         for path, content in expected.items():
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_bytes(content)
+            replace_output_file(path, content)
 
 
 def main():
