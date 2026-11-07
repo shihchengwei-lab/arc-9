@@ -12,14 +12,14 @@ Reviews look for changes to data, permissions and operations that prevent the fa
 
 ## Representative cases
 
-See the [full inputs and answers](examples/masters-lens/finalized-2026-10-22/README.md) for the four CSV import cases.
+See the [full inputs and answers](examples/csv-import/README.md) for the four CSV import cases.
 
 | Proposed system | What the review found |
 |---|---|
-| Small imports get support for unneeded formats and a queue; old jobs can overwrite later corrections. | Trace how old data can replace a correction. Decide which update takes precedence, then use measured execution time to decide whether a queue is needed. |
-| The system checks an authorized directory, but opening the file can reach someone else’s directory. | Derive the permitted data scope from the signed-in identity and enforce that same scope when opening files. |
-| Twenty jobs arrive per second while two finish, with a maximum wait of 30 seconds. | A larger queue cannot meet the commitment. Limit acceptance and handle resubmissions and interrupted work. |
-| The requirements accept resubmissions overwriting data, and data updates and load verification meet those requirements. | Ready to ship, with no additional changes required. |
+| A small import adds support for more formats and a queue. Retrying an old job can overwrite a later correction. | Decide which update takes precedence and keep data writes consistent with the completion record. Use measurements to decide whether background processing is needed. |
+| The system checks an authorized directory, but opening the file can reach someone else’s directory. | Use the signed-in tenant to determine which file to open, and handle pending jobs that still carry the old paths. |
+| Twenty jobs arrive per second while two finish, with a maximum wait of 30 seconds. | Limit intake to available processing capacity. Acknowledge acceptance only when the system can reliably take responsibility for the job. |
+| The requirements allow resubmissions to overwrite data and require 1–500 rows per CSV file. | The overwrite policy is acceptable. Delivery remains unconfirmed because the evidence does not show rejection of files with 0 or 501 rows. |
 
 ## Get started
 
