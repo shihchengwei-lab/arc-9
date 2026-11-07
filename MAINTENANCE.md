@@ -4,9 +4,9 @@
 
 用途、案例與安裝方式見 [README](README.md)。本文件說明重建與維護方式。
 
-[drafts/arc9.md](drafts/arc9.md) 維護入口與 sub-agent 接線；[第一層](drafts/references/review.md) 維護審查契約與具名場景，[第二層](drafts/references/output.md) 維護輸出編輯契約。各項規則只在其負責的來源維護；不要直接修改 `dist/` 中的產物。
+[drafts/arc9.md](drafts/arc9.md) 維護入口與唯讀 CLI 啟動方式。[第一層](drafts/references/review.md) 維護審查契約與具名場景，[第二層](drafts/references/output.md) 維護輸出編輯契約。各項規則在其負責的來源維護，修改後重建 `dist/`。
 
-入口交接使用者原始請求與可用材料。審查者按問題選用具名場景查證並形成結論，需要交叉核對時可用裁決表。編輯者依交接的答案及核對材料選正文、整理附錄。
+入口把使用者原始請求與可用材料交給獨立的 CLI 會話，檔案寫入由唯讀沙箱阻止。審查者按問題選用具名場景查證並形成結論，需要交叉核對時可用裁決表。主模型收到結果後編輯正文與附錄。
 
 [封裝腳本](scripts/package_skills.py) 維護呼叫名稱與介面描述，為入口加上 SKILL.md 識別資訊，複製兩份參考文件，另產生 agents/openai.yaml。單一成品名稱為 `arc9`，設定 `allow_implicit_invocation: false`，維持使用者明確呼叫。
 

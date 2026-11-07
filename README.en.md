@@ -8,7 +8,7 @@ A proposal can look workable while allowing old data to overwrite corrections, e
 
 `$arc9` is a review tool you invoke manually in Codex. It traces data and operations, explains whether a proposal meets its requirements, and identifies what needs to change and why. When the proposal already meets the requirements, it says so.
 
-Reviews look for changes to data, permissions and operations that prevent the failure from occurring. They only read materials you supply or permit, without changing code, files, settings or other systems.
+Reviews look for changes to data, permissions and operations that prevent the failure from occurring. The reviewer runs in a separate Codex CLI process where a read-only sandbox blocks file writes.
 
 ## Representative cases
 
@@ -23,7 +23,7 @@ See the [full inputs and answers](examples/csv-import/README.md) for the four CS
 
 ## Get started
 
-Use a Codex environment that supports independent reviewers (sub-agents).
+Use a Codex environment that can run terminal commands and a signed-in Codex CLI. On Windows, complete Codex sandbox setup first.
 
 1. [Download the ZIP](dist/arc-9.zip), extract it, and place the `arc9` folder in Codex’s skills directory. The default Windows location is `C:\Users\<username>\.codex\skills\`. If you set a different Codex data directory with `CODEX_HOME`, use its `skills` subdirectory.
 2. On the next turn, invoke it in the current task discussion:
