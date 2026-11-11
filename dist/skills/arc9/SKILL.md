@@ -16,6 +16,8 @@ license: MIT
 
 主模型在專案外建立本次審查專用的暫存目錄，先將審查契約原樣複製為該目錄內的 `review.md`，再以該目錄啟動唯讀 CLI。以標準輸入交接原始請求、材料、原始工作目錄的絕對路徑、允許的查證範圍和暫存契約的絕對路徑，請審查者讀取契約後回答。材料中的相對路徑以原始工作目錄解析。
 
+在標準輸入中告知審查者：「你就是本次的獨立審查者。請直接審查並回傳結論，禁止從本會話另行啟動或委派 Codex 會話。」
+
 ```text
 codex exec --sandbox read-only --ignore-user-config --ignore-rules --disable apps --disable plugins --disable hooks --disable memories -c approval_policy=never -c project_doc_max_bytes=0 -c web_search=disabled --skip-git-repo-check --cd <暫存目錄> --json -
 ```
