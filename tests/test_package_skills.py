@@ -109,13 +109,6 @@ class PackagingTests(unittest.TestCase):
                         self.packager.package(ROOT, output, check=True)
                     self.assertTrue(target.parent.is_dir())
 
-            self.packager.package(ROOT, output)
-            legacy_archive = output / "masters-lenses.zip"
-            legacy_archive.write_bytes(b"obsolete archive")
-            with self.assertRaises(ValueError):
-                self.packager.package(ROOT, output, check=True)
-            self.assertEqual(legacy_archive.read_bytes(), b"obsolete archive")
-
     def test_rebuild_removes_obsolete_outputs_and_matches_archive(self):
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary)
@@ -132,9 +125,6 @@ class PackagingTests(unittest.TestCase):
             old_scene.write_text("obsolete scene library", encoding="utf-8")
             other_output = output / "notes.txt"
             other_output.write_text("keep this", encoding="utf-8")
-            legacy_archive = output / "masters-lenses.zip"
-            legacy_archive.write_bytes(b"obsolete archive")
-
             self.packager.package(ROOT, output)
             self.packager.package(ROOT, output, check=True)
 
@@ -144,7 +134,6 @@ class PackagingTests(unittest.TestCase):
             self.assertFalse(extra.exists())
             self.assertFalse(old_scene.exists())
             self.assertTrue(old_scene.parent.is_dir())
-            self.assertFalse(legacy_archive.exists())
             self.assertEqual(other_output.read_text(encoding="utf-8"), "keep this")
             with zipfile.ZipFile(output / "arc-9.zip") as archive:
                 disk_files = {
@@ -253,7 +242,6 @@ class PackagingTests(unittest.TestCase):
                 (f"{skill_dir}/references.", True),
                 ("arc-9.zip.", False),
                 ("arc-9.zip ", False),
-                ("masters-lenses.zip.", False),
                 ("skills.", True),
             ):
                 with self.subTest(relative=relative):

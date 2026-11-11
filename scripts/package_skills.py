@@ -42,7 +42,7 @@ def output_directory_exists(path):
     return True
 
 
-def existing_outputs(output, skills_output):
+def existing_outputs(output, skills_output, archive_output):
     for directory in reversed(output.parents):
         output_directory_exists(directory)
 
@@ -50,8 +50,7 @@ def existing_outputs(output, skills_output):
     if not output_directory_exists(output):
         return files, directories
 
-    archives = (output / "arc-9.zip", output / "masters-lenses.zip")
-    managed_paths = (skills_output, *archives)
+    managed_paths = (skills_output, archive_output)
     names = {path.name for path in output.iterdir()}
     if os.name == "nt":
         managed_names = {path.name.casefold() for path in managed_paths}
@@ -76,12 +75,11 @@ def existing_outputs(output, skills_output):
             else:
                 raise ValueError(f"Package output requires a regular file or directory: {path}")
 
-    for path in archives:
-        mode = output_mode(path)
-        if mode is not None:
-            if not stat.S_ISREG(mode):
-                raise ValueError(f"Package archive requires a regular file: {path}")
-            files.append(path)
+    mode = output_mode(archive_output)
+    if mode is not None:
+        if not stat.S_ISREG(mode):
+            raise ValueError(f"Package archive requires a regular file: {archive_output}")
+        files.append(archive_output)
     return files, directories
 
 
@@ -127,16 +125,17 @@ def package(root, output, check=False):
             entry.compress_type = zipfile.ZIP_DEFLATED
             archive.writestr(entry, content)
 
-    expected = {output / "skills" / relative: content for relative, content in files.items()}
-    expected[output / "arc-9.zip"] = buffer.getvalue()
     skills_output = output / "skills"
+    archive_output = output / "arc-9.zip"
+    expected = {skills_output / relative: content for relative, content in files.items()}
+    expected[archive_output] = buffer.getvalue()
     expected_directories = {
         directory
         for relative in files
         for directory in (skills_output / relative).parents
         if skills_output in directory.parents
     }
-    existing_files, existing_directories = existing_outputs(output, skills_output)
+    existing_files, existing_directories = existing_outputs(output, skills_output, archive_output)
     expected_file_names = {path.parts for path in expected}
     expected_directory_names = {path.parts for path in expected_directories}
     obsolete_files = [path for path in existing_files if path.parts not in expected_file_names]
