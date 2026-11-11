@@ -14,7 +14,7 @@ license: MIT
 
 主模型依本檔位置解析[審查契約](references/review.md)和[編輯契約](references/output.md)的絕對路徑，載入編輯契約。用獨立的 Codex CLI 會話審查。若桌面環境提供 `CODEX_APP_RUNTIME_CLI_PATH`，用該執行檔代替下列 `codex`。
 
-在專案外建立用完即清除的空白暫存目錄，作為 CLI 的工作目錄。以標準輸入交接原始請求、材料、原始工作目錄的絕對路徑、允許的查證範圍和審查契約路徑，請審查者讀取契約後回答。材料中的相對路徑以原始工作目錄解析。
+主模型在專案外建立本次審查專用的暫存目錄，先將審查契約原樣複製為該目錄內的 `review.md`，再以該目錄啟動唯讀 CLI。以標準輸入交接原始請求、材料、原始工作目錄的絕對路徑、允許的查證範圍和暫存契約的絕對路徑，請審查者讀取契約後回答。材料中的相對路徑以原始工作目錄解析。
 
 ```text
 codex exec --sandbox read-only --ignore-user-config --ignore-rules --disable apps --disable plugins --disable hooks --disable memories -c approval_policy=never -c project_doc_max_bytes=0 -c web_search=disabled --skip-git-repo-check --cd <暫存目錄> --json -
@@ -22,7 +22,7 @@ codex exec --sandbox read-only --ignore-user-config --ignore-rules --disable app
 
 Windows 加上 `-c windows.sandbox=elevated`。啟動子程序時，從它的環境移除 `CODEX_WINDOWS_REGISTERED_CORE` 和 `CODEX_WINDOWS_SANDBOX_PACKAGE_FAMILY`，讓 CLI 使用 Windows 的獨立沙箱。
 
-初審與補查共用同一等待期限。有新材料、前提改變，或能指出哪個漏項可用哪份材料查清時，用相同命令補查，把最後的 `-` 換成 `resume <thread_id> -`。使用初審 `thread.started` 事件的會話 ID。
+初審與補查共用同一等待期限、暫存目錄及契約副本。有新材料、前提改變，或能指出哪個漏項可用哪份材料查清時，用相同命令補查，把最後的 `-` 換成 `resume <thread_id> -`。使用初審 `thread.started` 事件的會話 ID。審查結束後清除暫存目錄。
 
 ## 交接
 
